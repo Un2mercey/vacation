@@ -1,17 +1,24 @@
-# vacation
+# Vacation App
 ## Usage
+1. install NodeJS
+    https://nodejs.org/en/
+
+2. install dependencies
 ```
  npm install
 ```
-build application
+
+3. build application or
 ```
 npm run build
 ```
-start application
+
+4. quick start application
 ```
 npm start
+
 ```
-clean .tmp files
+5.for clean .tmp files
 ```
 npm run prebuild
 ```
