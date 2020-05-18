@@ -1,5 +1,28 @@
 .login-page {
-    font-size: 50px;
-    text-align: center;
-    color: lightcoral;
+    width: 400px;
+    position: relative;
+    top: 30vh;
+    left: 40%;
+
+    h1 {
+        text-align: center;
+        font-size: 40px;
+        padding-bottom: 20px;
+        letter-spacing: 15px;
+        color: #1A2980;
+    }
+
+    .btn-login {
+        background-image: linear-gradient(to right, #1A2980 0%, #26D0CE  51%, #1A2980  100%);
+        transition: 0.5s;
+        background-size: 200% auto;
+        border-radius: 12px;
+        color: white !important;
+    }
+
+    .btn-login:hover {
+        letter-spacing: 2px;
+        background-position: right center;
+        color: white !important;
+    }
 }

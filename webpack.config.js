@@ -62,6 +62,13 @@ module.exports = {
                 test: /.html$/,
                 exclude: /index.html$/,
                 use: 'html-loader'
+            },
+
+            { 
+                test: /\.json$/,
+                type: 'javascript/auto',
+                exclude: /node_modules/,
+                loader: 'json-loader'
             }
         ]
     },

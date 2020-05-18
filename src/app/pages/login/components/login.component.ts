@@ -1,29 +1,35 @@
 import './login.component.scss';
+import * as angular from 'angular';
+import * as _ from 'underscore';
+import { IUser } from './../../model/user.model';
+import { savedUsers } from './../../../../index';
 
 class LoginController {
-    public message: string = null;
+
+    private users: Array<IUser> = savedUsers;
 
     constructor(
-        private $state: angular.ui.IStateService
+        private $state: angular.ui.IStateService,
+        private $q: angular.IQService,
+        private $http: angular.IHttpService
     ) {
         'ngInject';
     }
 
     $onInit = () => {
         console.log('oninit');
-        this.getMessage();
-        this.setMessage();
-        this.getMessage();
     }
 
-    private getMessage = () => {
-        console.log('GetMessage\nmessage = ', this.message);
+    public checklogin = (newUser: IUser) => {
+        console.log('checklogin');
+        if (_.find(this.users, (user: IUser) => {
+            return angular.equals(user.login, newUser.login) && angular.equals(user.password, newUser.password);
+        }) !== undefined) {
+            console.log('find true');
+        } else {
+            console.log('find false');
+        }
     }
-
-    private setMessage = () => {
-        this.message = 'Hello World';
-    }
-
 }
 
 export class Login implements angular.IComponentOptions {
