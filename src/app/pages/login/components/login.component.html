@@ -1,0 +1,35 @@
+<div class="login-page">
+    <div class="row">
+        <div class="col-md-12">
+            <h1>Login</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <form name="loginForm" novalidate ng-submit="checkLogin()">
+                <div class="row">
+                    <div class="col-md-12">
+                        <label>Username:</label>
+                        <input type="text" ng-model="newUser.login">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <label>Password:</label>
+                        <input type="text" ng-model="newUser.password">
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <button class="btn btn-primary btn-block" type="submit">Login</button>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            {{vm.message}}
+        </div>
+    </div>
+</div>
