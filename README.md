@@ -18,7 +18,7 @@ npm run build
 npm start
 
 ```
-5.for clean .tmp files
+5. for clean .tmp files
 ```
 npm run prebuild
 ```
