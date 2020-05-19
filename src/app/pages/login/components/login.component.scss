@@ -12,6 +12,24 @@
         color: #1A2980;
     }
 
+    .form-error {
+        border: 1px solid #EB3349;
+    }
+
+    .error-message {
+        color: #EB3349;
+        position: absolute;
+        font-size: 18px;
+        top: 6px;
+        z-index: 99;
+        &.login {
+            left: 74%;
+        }
+        &.password {
+            left: 68%;
+        }
+    }
+
     .btn-login {
         background-image: linear-gradient(to right, #1A2980 0%, #26D0CE  51%, #1A2980  100%);
         transition: 0.5s;
@@ -24,5 +42,10 @@
         letter-spacing: 2px;
         background-position: right center;
         color: white !important;
+    }
+
+    .btn-login:disabled {
+        background-image: linear-gradient(to right, #EB3349 0%, #F45C43 51%, #EB3349 100%);
+        cursor: url('../../../theme/icons/cursor-invalid.png'), auto;
     }
 }
