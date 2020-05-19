@@ -5,6 +5,9 @@ export const routing = ($stateProvider: angular.ui.IStateProvider) => {
     $stateProvider
         .state('administrator', {
             url: '/administrator',
-            component: Admin.selector
+            component: Admin.selector,
+            params: {
+                user: null
+            }
         });
 };

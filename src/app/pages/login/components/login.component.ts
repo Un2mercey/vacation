@@ -1,9 +1,10 @@
 import './login.component.scss';
 import * as angular from 'angular';
 import * as _ from 'underscore';
-import { IUser } from '../../model/user/IUser.model';
+import { IUser } from '../../models/user/IUser.model';
 import { savedUsers } from './../../../../index';
 import { Messages } from '../../../core/components/Messages';
+import { LocalStorageService } from './../../services/local-storage.service';
 
 class LoginController {
 
@@ -14,15 +15,18 @@ class LoginController {
     private messages = Messages;
 
     constructor(
+        private $rootScope: angular.IRootScopeService,
         private $state: angular.ui.IStateService,
-        private $q: angular.IQService,
-        private $http: angular.IHttpService,
-        private $rootScope: angular.IRootScopeService
+        private localStorageService: LocalStorageService
     ) {
         'ngInject';
     }
 
-    $onInit = () => {
+    $onInit = (): void => {
+        if (this.localStorageService.checkStorage()) {
+            this.checkLogin(this.localStorageService.pullUser());
+        }
+
         this.$rootScope.$watch(() => {
             return this.newUser.login;
         }, (newValue, oldValue) => {
@@ -35,7 +39,7 @@ class LoginController {
         });
     }
 
-    private checkLogin = (newUser: IUser) => {
+    private checkLogin = (newUser: IUser): void => {
 
         this.loginError = Boolean((_.find(this.users, (user: IUser) => {
             return angular.equals(user.login, newUser.login);
@@ -51,14 +55,14 @@ class LoginController {
             newUser = _.find(this.users, (user: IUser) => {
                 return angular.equals(user.login, newUser.login) && angular.equals(user.password, newUser.password);
             });
-            this.$state.go(newUser.type, {user: newUser});
+            this.$state.go(newUser.type, { user: newUser });
         }
     }
 }
 
 export class Login implements angular.IComponentOptions {
-    static selector = 'login';
-    static controller = LoginController;
-    static controllerAs = 'vm';
-    static template = require('./login.component.html');
+    public static selector = 'login';
+    public static controller = LoginController;
+    public static controllerAs = 'vm';
+    public static template = require('./login.component.html');
 }
