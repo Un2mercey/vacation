@@ -6,27 +6,30 @@
 
     h1 {
         text-align: center;
-        font-size: 40px;
-        padding-bottom: 20px;
-        letter-spacing: 15px;
+        font-size: 50px;
+        padding-bottom: 25px;
+        letter-spacing: 25px;
         color: #1A2980;
     }
 
     .form-error {
-        border: 1px solid #EB3349;
+        border: 1.5px solid #EB3349;
+        transition: 1s;
+        background: rgb(255, 228, 243);
     }
 
     .error-message {
+        transition: 1s;
         color: #EB3349;
         position: absolute;
         font-size: 18px;
         top: 6px;
         z-index: 99;
         &.login {
-            left: 74%;
+            left: 68%;
         }
         &.password {
-            left: 68%;
+            left: 73%;
         }
     }
 

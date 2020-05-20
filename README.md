@@ -1,7 +1,7 @@
 # Vacation App
 ## Usage
 1. install NodeJS
-    https://nodejs.org/en/
+https://nodejs.org/en/
 
 2. install dependencies
 ```
@@ -22,3 +22,4 @@ npm start
 ```
 npm run prebuild
 ```
+6. to start application in static ip add parameter { --host yo.ur.i.p } in package.json script "start"

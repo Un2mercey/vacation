@@ -4,10 +4,7 @@ export const routing = ($stateProvider: angular.ui.IStateProvider) => {
     'ngInject';
     $stateProvider
         .state('administrator', {
-            url: '/administrator',
-            component: Admin.selector,
-            params: {
-                user: null
-            }
+            url: '/admin-control-panel',
+            component: Admin.selector
         });
 };

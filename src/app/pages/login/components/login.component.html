@@ -8,22 +8,24 @@
         <div class="col-md-12">
             <form name="loginForm" novalidate ng-submit="vm.checkLogin(vm.newUser)">
                 <div class="input-group mb-3">
-                    <input  type="text" 
-                            class="form-control" 
-                            ng-class="{'form-error': vm.loginError}"
-                            placeholder="Username:" 
-                            ng-model="vm.newUser.login" 
-                            required>
-                    <div class="error-message login" ng-show="vm.loginError" ng-bind="vm.messages.MSG_LOGIN_ERROR"></div>
-                </div>
-                <div class="input-group mb-3">
                     <input  type="text"
                             class="form-control"
-                            ng-class="{'form-error': vm.passwordError}"
-                            placeholder="Password:" 
-                            ng-model="vm.newUser.password" 
+                            ng-class="{'form-error': vm.loginError}"
+                            placeholder="Your login:"
+                            ng-model="vm.newUser.login"
+                            maxlength="29"
                             required>
-                    <div class="error-message password" ng-show="vm.passwordError" ng-bind="vm.messages.MSG_PASSWORD_ERROR"></div>
+                    <div class="error-message login" ng-show="vm.loginError" ng-bind="vm.messages.MSG_LOGIN_ERROR_01"></div>
+                </div>
+                <div class="input-group mb-3">
+                    <input  type="password"
+                            class="form-control"
+                            ng-class="{'form-error': vm.loginError}"
+                            placeholder="Your password:"
+                            ng-model="vm.newUser.password"
+                            maxlength="31"
+                            required>
+                    <div class="error-message password" ng-show="vm.loginError" ng-bind="vm.messages.MSG_LOGIN_ERROR_02"></div>
                 </div>
                 <button class="btn btn-login btn-block" type="submit" ng-disabled="loginForm.$invalid">Login</button>
             </form>

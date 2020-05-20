@@ -1,4 +1,4 @@
 export class Messages {
-    public static MSG_LOGIN_ERROR = 'No matches';
-    public static MSG_PASSWORD_ERROR = 'Password error';
+    public static MSG_LOGIN_ERROR_01 = 'Incorrect login';
+    public static MSG_LOGIN_ERROR_02 = 'or password';
 }

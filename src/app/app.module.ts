@@ -1,16 +1,18 @@
 import * as angular from 'angular';
-import { configuration } from './app.configuration';
 import { moduleName as coreModule } from './core/core.module';
 import { moduleName as loginModule } from './pages/login/login.module';
 import { moduleName as adminModule } from './pages/admin/admin.module';
+import { moduleName as vacationModule } from './pages/vacation/vacation.module';
 import { LocalStorageService } from './pages/services/local-storage.service';
+import { AuthentificationService } from './pages/services/authentification.service';
 
 export const moduleName =
   angular.module('application', [
     coreModule,
     loginModule,
-    adminModule
+    adminModule,
+    vacationModule
   ])
   .service(LocalStorageService.selector, LocalStorageService)
-  .config(configuration)
+  .service(AuthentificationService.selector, AuthentificationService)
   .name;

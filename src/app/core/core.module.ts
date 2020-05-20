@@ -1,7 +1,7 @@
 import * as angular from 'angular';
 import { App } from './components/app/app.component';
 import { Root } from './components/root/root.component';
-import { configuration } from './core.configuration';
+import { configLocation, configRoot } from './core.configuration';
 import { routing } from './core.routes';
 
 export const moduleName =
@@ -9,6 +9,7 @@ export const moduleName =
     .module('application.core', ['ui.router'])
     .component(App.selector, App)
     .component(Root.selector, Root)
-    .config(configuration)
+    .config(configLocation)
+    .config(configRoot)
     .config(routing)
     .name;

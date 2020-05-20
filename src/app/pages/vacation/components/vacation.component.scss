@@ -1,7 +1,10 @@
-.admin-page {
-    text-align: center;
-    color: lightskyblue;
-    font-size: 80px;
+.vacation-page {
+    font-size: 50px;
+    color: red;
+    
+    .row {
+        text-align: center;
+    }
 
     .btn-exit {
         position: relative;
