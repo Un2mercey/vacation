@@ -1,8 +1,10 @@
 <div class="admin-page">
-    <div class="row">
-        <div class="col-md-12">
-            {{vm.message}}
+    <div class="panel title-panel">
+        <div class="row">
+            <div class="col-md-12">
+                <span class="title" ng-bind="vm.title"></span>
+                <button class="btn btn-danger btn-exit" ng-click="vm.exit()">EXIT</button>
+            </div>
         </div>
     </div>
-    <button class="btn btn-danger btn-exit" ng-click="vm.exit()">EXIT</button>
 </div>

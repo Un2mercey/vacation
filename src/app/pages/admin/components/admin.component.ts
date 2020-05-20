@@ -1,27 +1,56 @@
 import './admin.component.scss';
 import * as angular from 'angular';
-import { AuthentificationService } from '../../services/authentification.service';
+import * as _ from 'underscore';
+import { AuthentificationService } from './../../services/authentification.service';
+import { BaseGrid } from './../../models/base-grid/base-grid.model';
+import { IUser } from './../../models/user/user.interface';
+import { UserTypeEnum } from './../../models/user/user-type.enum';
 
 class AdminController {
 
-    private message: string = 'HELLO, ADMIN';
+    private title: string = 'HELLO, ADMIN';
+    private grid: BaseGrid = new BaseGrid();
 
     constructor(
         private $state: angular.ui.IStateService,
-        private auth: AuthentificationService
+        private auth: AuthentificationService,
+        private $timeout: ng.ITimeoutService
     ) {
         'ngInject';
     }
 
     $onInit = (): void => {
         if (this.auth.checkUser()) {
-            console.log(this.auth.getUser());
+            if (this.auth.checkUserType(UserTypeEnum.ADMINISTRATOR)) {
+                this.init();
+            } else { this.exit(); }
         } else {
-            this.exit();
+            if (this.auth.checkSessionStorage()) {
+                this.auth.restoreUser();
+                this.$timeout(() => { this.$onInit(); });
+            } else { this.exit(); }
         }
     }
 
-    public exit = (): void => {
+    private init = (): void => {
+        this.loadUsersList();
+    }
+
+    private loadUsersList = () => {
+        this.auth.getUsersList()
+            .then((response: Array<IUser>) => {
+                this.grid.records = response;
+                _.forEach(this.grid.records, (record: IUser) => {
+                    record.password = '********';
+                });
+                console.log('grid records was loaded\n', this.grid.records);
+            })
+            .catch((error: any) => {
+                console.error(`get users error: ${error}`);
+            });
+    }
+
+    private exit = (): void => {
         this.auth.clearUser();
         this.$state.go('login');
     }

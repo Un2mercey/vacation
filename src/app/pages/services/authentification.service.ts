@@ -1,30 +1,43 @@
 import * as angular from 'angular';
 import * as _ from 'underscore';
-import { IUser, User } from './../models/user/user.model';
-import { savedUsers } from './../../../index';
-import { UserTypeEnum } from '../models/user/userType.model';
+import { User } from './../models/user/user.model';
+import { IUser } from './../models/user/user.interface';
+import { UserTypeEnum } from './../models/user/user-type.enum';
+import { SessionStorageService } from './session-storage.service';
 
 export class AuthentificationService {
 
     public static selector = 'auth';
 
-    private users: Array<IUser> = savedUsers;
     private user: User;
 
-    public findUser = (newUser: IUser): IUser => {
-        if (this.checkUser() && this.findInUsers(this.getUser()) !== undefined) {
-            return this.getUser();
-        } else {
-            let matchUser: IUser = this.findInUsers(newUser);
-            if (matchUser !== undefined) {
-                this.setUser(matchUser);
-                return this.getUser();
-            }
-        }
+    constructor(
+        private $q: angular.IQService,
+        private ssService: SessionStorageService
+    ) {
+        'ngInject';
+    }
+
+    public searchUser = (newUser: IUser, searchProp: number = 2): void => {
+        this.getUsersList(true)
+            .then((response: Array<IUser>) => {
+                let matchUser: IUser = this.findUser(response, newUser, searchProp);
+                if (matchUser !== undefined) {
+                    this.user = new User(matchUser);
+                    sessionStorage.setItem('login', this.user.getLogin());
+                }
+            })
+            .catch((error: any) => {
+                console.error(`search user error: ${error}`);
+            });
     }
 
     public checkUser = (): boolean => {
-        return this.user !== undefined ? true : false;
+        return this.user !== undefined;
+    }
+
+    public checkSessionStorage = (): boolean => {
+        return Boolean(this.ssService.getItem('login'));
     }
 
     public checkUserType = (type: UserTypeEnum): boolean => {
@@ -33,10 +46,7 @@ export class AuthentificationService {
 
     public clearUser = (): void => {
         this.user = undefined;
-    }
-
-    public setUser = (newUser: IUser): void => {
-        this.user = new User(newUser);
+        this.ssService.clearStorage();
     }
 
     public getUser = (): IUser => {
@@ -47,9 +57,26 @@ export class AuthentificationService {
         };
     }
 
-    private findInUsers = (finder: IUser): IUser => {
-        return _.find(this.users, (user: IUser) => {
-            return  angular.equals(user.login, finder.login) && angular.equals(user.password, finder.password);
-        });
+    public getUsersList = (param?: boolean): ng.IPromise<Array<IUser>> => {
+        if (this.checkUserType(UserTypeEnum.ADMINISTRATOR) || param) {
+            return this.$q.resolve(require('./../../../static/users.json'));
+        }
+    }
+
+    public restoreUser = (): void => {
+        this.searchUser({login: this.ssService.getItem('login')}, 1);
+    }
+
+    private findUser = (array: Array<IUser>, user: IUser, propLength: number): IUser => {
+        switch (propLength) {
+            case 1:
+                return _.find(array, (arUser: IUser) => {
+                    return angular.equals(arUser.login, user.login);
+                });
+            case 2:
+                return _.find(array, (arUser: IUser) => {
+                    return angular.equals(arUser.login, user.login) && angular.equals(arUser.password, user.password);
+                });
+        }
     }
 }

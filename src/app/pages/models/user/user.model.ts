@@ -1,11 +1,5 @@
-import { UserTypeEnum } from './userType.model';
-
-export interface IUser {
-    login?: string;
-    password?: string;
-    name?: string;
-    type?: UserTypeEnum;
-}
+import { UserTypeEnum } from './user-type.enum';
+import { IUser } from './user.interface';
 
 export class User {
 

@@ -1,26 +1,35 @@
 import './vacation.component.scss';
 import * as angular from 'angular';
-import { IUser } from '../../models/user/user.model';
-import { AuthentificationService } from '../../services/authentification.service';
+import { AuthentificationService } from './../../services/authentification.service';
+import { UserTypeEnum } from './../../models/user/user-type.enum';
 
 class VacationController {
 
     private message: string = 'HELLO AVERAGE USER';
-    private user: IUser;
 
     constructor(
         private $state: angular.ui.IStateService,
-        private auth: AuthentificationService
+        private auth: AuthentificationService,
+        private $timeout: ng.ITimeoutService
     ) {
         'ngInject';
     }
 
     $onInit = (): void => {
         if (this.auth.checkUser()) {
-            console.log(this.auth.getUser());
+            if (this.auth.checkUserType(UserTypeEnum.STANDART)) {
+                this.init();
+            } else { this.exit(); }
         } else {
-            this.exit();
+            if (this.auth.checkSessionStorage()) {
+                this.auth.restoreUser();
+                this.$timeout(() => { this.$onInit(); });
+            } else { this.exit(); }
         }
+    }
+
+    public init = () => {
+        console.log('init');
     }
 
     public exit = (): void => {
