@@ -49,6 +49,6 @@
 
     .btn-login:disabled {
         background-image: linear-gradient(to right, #EB3349 0%, #F45C43 51%, #EB3349 100%);
-        cursor: url('../../../theme/icons/cursor-invalid.png'), auto;
+        cursor: $cursor-invalid;
     }
 }

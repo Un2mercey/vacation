@@ -1,11 +1,10 @@
-import './admin.component.scss';
 import * as angular from 'angular';
 import * as _ from 'underscore';
 import { AuthentificationService } from './../../services/authentification.service';
 import { BaseGrid } from './../../models/base-grid/base-grid.model';
 import { IUser } from './../../models/user/user.interface';
 import { UserTypeEnum } from './../../models/user/user-type.enum';
-import { User } from '../../models/user/user.model';
+import { User } from './../../models/user/user.model';
 
 class AdminController {
 
@@ -31,7 +30,6 @@ class AdminController {
         this.auth.getUsersList()
             .then((response: Array<IUser>) => {
                 _.forEach(response, (respUser: IUser) => { this.grid.records.push(new User(respUser)); });
-                console.log('grid records was loaded\n', this.grid.records);
             })
             .catch((error: any) => {
                 console.error(`get users error: ${error}`);

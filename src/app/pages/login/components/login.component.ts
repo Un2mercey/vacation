@@ -1,4 +1,3 @@
-import './login.component.scss';
 import * as angular from 'angular';
 import * as _ from 'underscore';
 import { UserTypeEnum } from './../../models/user/user-type.enum';

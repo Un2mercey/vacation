@@ -1,4 +1,3 @@
-import './vacation.component.scss';
 import * as angular from 'angular';
 import { AuthentificationService } from './../../services/authentification.service';
 import { UserTypeEnum } from './../../models/user/user-type.enum';

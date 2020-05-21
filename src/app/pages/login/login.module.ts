@@ -5,6 +5,12 @@ import { Login } from './components/login.component';
 export const moduleName =
   angular
     .module('application.login', ['ui.router'])
+    /**
+     * Register Module Components
+     */
     .component(Login.selector, Login)
+    /**
+     * Register Module Routing
+     */
     .config(routing)
     .name;
