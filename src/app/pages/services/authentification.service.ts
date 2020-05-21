@@ -18,30 +18,30 @@ export class AuthentificationService {
         'ngInject';
     }
 
-    public searchUser = (newUser: IUser, searchProp: number = 2): void => {
-        this.getUsersList(true)
-            .then((response: Array<IUser>) => {
-                let matchUser: IUser = this.findUser(response, newUser, searchProp);
-                if (matchUser !== undefined) {
-                    this.user = new User(matchUser);
-                    sessionStorage.setItem('login', this.user.getLogin());
-                }
-            })
-            .catch((error: any) => {
-                console.error(`search user error: ${error}`);
-            });
-    }
-
-    public checkUser = (): boolean => {
-        return this.user !== undefined;
+    public searchUser = (newUser: IUser, searchProp: number = 2): IUser => {
+        let users: Array<IUser> = require('./../../../static/users.json');
+        let matchUser: IUser = this.findUser(users, newUser, searchProp);
+        if (matchUser !== undefined) {
+            this.user = new User(matchUser);
+            sessionStorage.setItem('login', this.user.getLogin());
+            return this.getUser();
+        }
     }
 
     public checkSessionStorage = (): boolean => {
         return Boolean(this.ssService.getItem('login'));
     }
 
+    public checkUser = (type?: UserTypeEnum): boolean => {
+        if (type) {
+            if (this.user !== undefined) { return this.checkUserType(type);
+            } else if (this.checkSessionStorage() && this.restoreUser() !== undefined) { return this.checkUserType(type);
+            } else { return false; }
+        } else { return this.user !== undefined; }
+    }
+
     public checkUserType = (type: UserTypeEnum): boolean => {
-        return this.checkUser() ? angular.equals(this.user.getType(), type) : false;
+        return angular.equals(this.user.getType(), type);
     }
 
     public clearUser = (): void => {
@@ -57,14 +57,14 @@ export class AuthentificationService {
         };
     }
 
-    public getUsersList = (param?: boolean): ng.IPromise<Array<IUser>> => {
-        if (this.checkUserType(UserTypeEnum.ADMINISTRATOR) || param) {
+    public getUsersList = (): ng.IPromise<Array<IUser>> => {
+        if (this.checkUserType(UserTypeEnum.ADMINISTRATOR)) {
             return this.$q.resolve(require('./../../../static/users.json'));
         }
     }
 
-    public restoreUser = (): void => {
-        this.searchUser({login: this.ssService.getItem('login')}, 1);
+    public restoreUser = (): IUser => {
+        return this.searchUser({login: this.ssService.getItem('login')}, 1);
     }
 
     private findUser = (array: Array<IUser>, user: IUser, propLength: number): IUser => {

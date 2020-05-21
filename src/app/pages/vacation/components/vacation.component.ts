@@ -9,23 +9,13 @@ class VacationController {
 
     constructor(
         private $state: angular.ui.IStateService,
-        private auth: AuthentificationService,
-        private $timeout: ng.ITimeoutService
+        private auth: AuthentificationService
     ) {
         'ngInject';
     }
 
     $onInit = (): void => {
-        if (this.auth.checkUser()) {
-            if (this.auth.checkUserType(UserTypeEnum.STANDART)) {
-                this.init();
-            } else { this.exit(); }
-        } else {
-            if (this.auth.checkSessionStorage()) {
-                this.auth.restoreUser();
-                this.$timeout(() => { this.$onInit(); });
-            } else { this.exit(); }
-        }
+        this.auth.checkUser(UserTypeEnum.STANDART) ? this.init() : this.exit();
     }
 
     public init = () => {

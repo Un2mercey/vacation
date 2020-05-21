@@ -15,8 +15,7 @@ class LoginController {
     constructor(
         private $rootScope: angular.IRootScopeService,
         private $state: angular.ui.IStateService,
-        private auth: AuthentificationService,
-        private $timeout: ng.ITimeoutService
+        private auth: AuthentificationService
     ) {
         'ngInject';
     }
@@ -29,8 +28,7 @@ class LoginController {
 
     private checkAuth = (newUser: IUser): void => {
         this.authError = false;
-        this.auth.searchUser(newUser);
-        this.$timeout(() => { this.auth.checkUser() ? this.enter() : this.authError = true; });
+        this.auth.searchUser(newUser) !== undefined ? this.enter() : this.authError = true;
     }
 
     private enter = () => {

@@ -5,6 +5,7 @@ import { AuthentificationService } from './../../services/authentification.servi
 import { BaseGrid } from './../../models/base-grid/base-grid.model';
 import { IUser } from './../../models/user/user.interface';
 import { UserTypeEnum } from './../../models/user/user-type.enum';
+import { User } from '../../models/user/user.model';
 
 class AdminController {
 
@@ -13,23 +14,13 @@ class AdminController {
 
     constructor(
         private $state: angular.ui.IStateService,
-        private auth: AuthentificationService,
-        private $timeout: ng.ITimeoutService
+        private auth: AuthentificationService
     ) {
         'ngInject';
     }
 
     $onInit = (): void => {
-        if (this.auth.checkUser()) {
-            if (this.auth.checkUserType(UserTypeEnum.ADMINISTRATOR)) {
-                this.init();
-            } else { this.exit(); }
-        } else {
-            if (this.auth.checkSessionStorage()) {
-                this.auth.restoreUser();
-                this.$timeout(() => { this.$onInit(); });
-            } else { this.exit(); }
-        }
+        this.auth.checkUser(UserTypeEnum.ADMINISTRATOR) ? this.init() : this.exit();
     }
 
     private init = (): void => {
@@ -39,10 +30,7 @@ class AdminController {
     private loadUsersList = () => {
         this.auth.getUsersList()
             .then((response: Array<IUser>) => {
-                this.grid.records = response;
-                _.forEach(this.grid.records, (record: IUser) => {
-                    record.password = '********';
-                });
+                _.forEach(response, (respUser: IUser) => { this.grid.records.push(new User(respUser)); });
                 console.log('grid records was loaded\n', this.grid.records);
             })
             .catch((error: any) => {
@@ -54,7 +42,6 @@ class AdminController {
         this.auth.clearUser();
         this.$state.go('login');
     }
-
 }
 
 export class Admin implements angular.IComponentOptions {
