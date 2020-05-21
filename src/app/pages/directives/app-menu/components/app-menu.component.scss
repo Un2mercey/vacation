@@ -1,3 +1,32 @@
-.menu {
-    color: #109eb1;
+.app-menu {
+    .nav-vice-city {
+        background-image: linear-gradient(to top, #3494E6, #EC6EAD);
+        a {
+            color: #41165c;
+            transition: 1s;
+        }
+        a:hover {
+            color: #FFA9E8;
+            letter-spacing: 1px;
+        }
+
+        .btn-vice-city-quit {
+            background-image: linear-gradient(to right, #EC6EAD, #3494E6, #EC6EAD);
+            width: 150px;
+            transition: 1s;
+            background-size: 100% auto;
+            border-radius: 20px;
+            border: 1px solid #41165c;
+            letter-spacing: 3px;
+        }
+
+        .btn-vice-city-quit:hover {
+            width: 155px;
+            background-position: right center;
+            letter-spacing: 5px;
+            border: 1px solid #EC6EAD;
+            background-size: 200% auto;
+            color: #FFA9E8;
+        }
+    }
 }

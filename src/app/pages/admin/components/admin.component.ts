@@ -12,14 +12,10 @@ class AdminController {
     private grid: BaseGrid = new BaseGrid();
 
     constructor(
-        private $state: angular.ui.IStateService,
         private auth: AuthentificationService
     ) {
         'ngInject';
-    }
-
-    $onInit = (): void => {
-        this.auth.checkUser(UserTypeEnum.ADMINISTRATOR) ? this.init() : this.exit();
+        if (this.auth.recheck(UserTypeEnum.ADMINISTRATOR)) { this.init(); }
     }
 
     private init = (): void => {
@@ -34,11 +30,6 @@ class AdminController {
             .catch((error: any) => {
                 console.error(`get users error: ${error}`);
             });
-    }
-
-    private exit = (): void => {
-        this.auth.clearUser();
-        this.$state.go('login');
     }
 }
 

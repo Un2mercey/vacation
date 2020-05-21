@@ -12,8 +12,9 @@ export class AuthentificationService {
     private user: User;
 
     constructor(
-        private $q: angular.IQService,
-        private ssService: SessionStorageService
+        private $state: angular.ui.IStateService,
+        private ssService: SessionStorageService,
+        private $q: angular.IQService
     ) {
         'ngInject';
     }
@@ -65,6 +66,19 @@ export class AuthentificationService {
 
     public restoreUser = (): IUser => {
         return this.searchUser({login: this.ssService.getItem('login')}, 1);
+    }
+
+    public recheck = (type: UserTypeEnum): boolean | void => {
+        return this.checkUser() ? this.checkUser(type) ? true : this.enter() : this.exit();
+    }
+
+    public enter = () => {
+        this.checkUserType(UserTypeEnum.ADMINISTRATOR) ? this.$state.go('administrator') : this.$state.go('vacation');
+    }
+
+    public exit = () => {
+        this.clearUser();
+        this.$state.go('login');
     }
 
     private findUser = (array: Array<IUser>, user: IUser, propLength: number): IUser => {

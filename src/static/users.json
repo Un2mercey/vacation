@@ -2,13 +2,13 @@
   {
     "login": "admin",
     "password": "admin",
-    "name": "Administrator",
+    "name": "Иван",
     "type": "administrator"
   },
   {
     "login": "user",
     "password": "user",
-    "name": "User",
+    "name": "Сергей",
     "type": "standart"
   }
 ]

@@ -7,23 +7,14 @@ class VacationController {
     private message: string = 'HELLO AVERAGE USER';
 
     constructor(
-        private $state: angular.ui.IStateService,
         private auth: AuthentificationService
     ) {
         'ngInject';
+        if (this.auth.recheck(UserTypeEnum.STANDART)) { this.init(); }
     }
 
-    $onInit = (): void => {
-        this.auth.checkUser(UserTypeEnum.STANDART) ? this.init() : this.exit();
-    }
-
-    public init = () => {
+    private init = (): void => {
         console.log('init');
-    }
-
-    public exit = (): void => {
-        this.auth.clearUser();
-        this.$state.go('login');
     }
 }
 
