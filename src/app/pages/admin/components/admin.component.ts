@@ -2,9 +2,9 @@ import * as angular from 'angular';
 import * as _ from 'underscore';
 import { AuthentificationService } from './../../services/authentification.service';
 import { BaseGrid } from './../../models/base-grid/base-grid.model';
-import { IUser } from './../../models/user/user.interface';
-import { UserTypeEnum } from './../../models/user/user-type.enum';
+import { IUser, IJsonUser } from './../../models/user/user.interface';
 import { User } from './../../models/user/user.model';
+import { UserTypeEnum } from '../../models/user/user-type.enum';
 
 class AdminController {
 
@@ -24,8 +24,8 @@ class AdminController {
 
     private loadUsersList = () => {
         this.auth.getUsersList()
-            .then((response: Array<IUser>) => {
-                _.forEach(response, (respUser: IUser) => { this.grid.records.push(new User(respUser)); });
+            .then((response: Array<IJsonUser>) => {
+                _.forEach(response, (respUser: IJsonUser) => { this.grid.records.push(new User(respUser)); });
             })
             .catch((error: any) => {
                 console.error(`get users error: ${error}`);

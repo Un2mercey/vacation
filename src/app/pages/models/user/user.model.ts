@@ -1,16 +1,21 @@
-import { UserTypeEnum } from './user-type.enum';
-import { IUser } from './user.interface';
+import { IJsonUser } from './user.interface';
+import { UserTypeEnum, serializeUserType } from './user-type.enum';
+import { Fio, IFio } from './fio.model';
 
 export class User {
 
     private login: string;
-    private name: string;
     private type: UserTypeEnum;
+    private fio: Fio;
+    private email: string;
+    private birthdate: Date;
 
-    constructor(newUser: IUser) {
+    constructor(newUser: IJsonUser) {
         this.setLogin(newUser.login);
-        this.setName(newUser.name);
-        this.setType(newUser.type);
+        this.setType(serializeUserType(newUser.type));
+        this.setFio(newUser.fio);
+        this.setEmail(newUser.email);
+        this.setBirthdate(new Date(JSON.parse(newUser.birthdate)));
     }
 
     public setLogin = (newLogin: string): void => {
@@ -21,19 +26,35 @@ export class User {
         return this.login;
     }
 
-    public setName = (newName: string): void => {
-        this.name = newName;
-    }
-
-    public getName = (): string => {
-        return this.name;
-    }
-
     public setType = (newtype: UserTypeEnum): void => {
         this.type = newtype;
     }
 
     public getType = (): UserTypeEnum => {
         return this.type;
+    }
+
+    public setFio = (fio: IFio): void => {
+        this.fio = new Fio(fio);
+    }
+
+    public getFio = (): Fio => {
+        return this.fio;
+    }
+
+    public getEmail = (): string => {
+        return this.email;
+    }
+
+    public setEmail = (email: string): void => {
+        this.email = email;
+    }
+
+    public getBirthdate = (): Date => {
+        return this.birthdate;
+    }
+
+    public setBirthdate = (birthdate: Date): void => {
+        this.birthdate = birthdate;
     }
 }

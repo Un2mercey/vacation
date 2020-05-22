@@ -1,9 +1,9 @@
 import * as angular from 'angular';
 import * as _ from 'underscore';
 import { User } from './../models/user/user.model';
-import { IUser } from './../models/user/user.interface';
-import { UserTypeEnum } from './../models/user/user-type.enum';
+import { IUser, IJsonUser } from './../models/user/user.interface';
 import { SessionStorageService } from './session-storage.service';
+import { UserTypeEnum } from '../models/user/user-type.enum';
 
 export class AuthentificationService {
 
@@ -20,9 +20,9 @@ export class AuthentificationService {
     }
 
     public searchUser = (newUser: IUser, searchProp: number = 2): IUser => {
-        let users: Array<IUser> = require('./../../../static/users.json');
-        let matchUser: IUser = this.findUser(users, newUser, searchProp);
-        if (matchUser !== undefined) {
+        let users: Array<IJsonUser> = require('./../../../static/users.json');
+        let matchUser: IJsonUser = this.findUser(users, newUser, searchProp);
+        if (this.checkUndefined(matchUser)) {
             this.user = new User(matchUser);
             sessionStorage.setItem('login', this.user.getLogin());
             return this.getUser();
@@ -35,10 +35,10 @@ export class AuthentificationService {
 
     public checkUser = (type?: UserTypeEnum): boolean => {
         if (type) {
-            if (this.user !== undefined) { return this.checkUserType(type);
-            } else if (this.checkSessionStorage() && this.restoreUser() !== undefined) { return this.checkUserType(type);
+            if (this.checkUndefined(this.user)) { return this.checkUserType(type);
+            } else if (this.checkSessionStorage() && this.checkUndefined(this.restoreUser())) { return this.checkUserType(type);
             } else { return false; }
-        } else { return this.user !== undefined; }
+        } else { return this.checkUndefined(this.user); }
     }
 
     public checkUserType = (type: UserTypeEnum): boolean => {
@@ -54,11 +54,17 @@ export class AuthentificationService {
         return {
             login: this.user.getLogin(),
             type: this.user.getType(),
-            name: this.user.getName()
+            fio: {
+                lastName: this.user.getFio().getLastName(),
+                firstName: this.user.getFio().getFirstName(),
+                secondName: this.user.getFio().getSecondName()
+            },
+            email: this.user.getEmail(),
+            birthdate: this.user.getBirthdate()
         };
     }
 
-    public getUsersList = (): ng.IPromise<Array<IUser>> => {
+    public getUsersList = (): ng.IPromise<Array<IJsonUser>> => {
         if (this.checkUserType(UserTypeEnum.ADMINISTRATOR)) {
             return this.$q.resolve(require('./../../../static/users.json'));
         }
@@ -84,15 +90,37 @@ export class AuthentificationService {
         this.$state.go('login');
     }
 
-    private findUser = (array: Array<IUser>, user: IUser, propLength: number): IUser => {
+    public getUserShortName = (): string => {
+        if (this.checkUndefined(this.user) && this.checkUndefined(this.user.getFio())) {
+            let lastName: string = this.checkUndefined(this.user.getFio().getLastName()) ? this.user.getFio().getLastName() : '';
+            let firstName: string = this.checkUndefined(this.user.getFio().getFirstName()) ? this.user.getFio().getFirstName().substr(0, 1) : '';
+            let secondName: string = this.checkUndefined(this.user.getFio().getSecondName()) ? this.user.getFio().getSecondName().substr(0, 1) : '';
+            return `${lastName} ${firstName}. ${secondName}.`;
+        }
+    }
+
+    public getUserFullName = (): string => {
+        if (this.checkUndefined(this.user) && this.checkUndefined(this.user.getFio())) {
+            let lastName: string = this.checkUndefined(this.user.getFio().getLastName()) ? this.user.getFio().getLastName() : '';
+            let firstName: string = this.checkUndefined(this.user.getFio().getFirstName()) ? this.user.getFio().getFirstName() : '';
+            let secondName: string = this.checkUndefined(this.user.getFio().getSecondName()) ? this.user.getFio().getSecondName() : '';
+            return `${lastName} ${firstName} ${secondName}`;
+        }
+    }
+
+    private checkUndefined = (value: any): boolean => {
+        return value !== undefined;
+    }
+
+    private findUser = (array: Array<IJsonUser>, user: IUser, propLength: number): IJsonUser => {
         switch (propLength) {
             case 1:
-                return _.find(array, (arUser: IUser) => {
-                    return angular.equals(arUser.login, user.login);
+                return _.find(array, (jsonUser: IJsonUser) => {
+                    return angular.equals(jsonUser.login, user.login);
                 });
             case 2:
-                return _.find(array, (arUser: IUser) => {
-                    return angular.equals(arUser.login, user.login) && angular.equals(arUser.password, user.password);
+                return _.find(array, (jsonUser: IJsonUser) => {
+                    return angular.equals(jsonUser.login, user.login) && angular.equals(jsonUser.password, user.password);
                 });
         }
     }

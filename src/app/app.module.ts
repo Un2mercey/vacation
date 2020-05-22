@@ -6,6 +6,7 @@ import { moduleName as coreModule } from './core/core.module';
 import { moduleName as loginModule } from './pages/login/login.module';
 import { moduleName as adminModule } from './pages/admin/admin.module';
 import { moduleName as vacationModule } from './pages/vacation/vacation.module';
+import { moduleName as profileModule } from './pages/profile/profile.module';
 /**
  * Import Application Services
  */
@@ -22,7 +23,8 @@ export const moduleName =
     coreModule,
     loginModule,
     adminModule,
-    vacationModule
+    vacationModule,
+    profileModule
   ])
   /**
    * Register Application Services

@@ -2,13 +2,25 @@
   {
     "login": "admin",
     "password": "admin",
-    "name": "Иван",
-    "type": "administrator"
+    "type": "administrator",
+    "fio": {
+      "lastName": "Марков",
+      "firstName": "Арсений",
+      "secondName": "Николаевич"
+    },
+    "birthdate": "\"1994-03-14T21:00:00.000Z\"",
+    "email": "zamberg42@gmail.com"
   },
   {
     "login": "user",
     "password": "user",
-    "name": "Сергей",
-    "type": "standart"
+    "type": "standart",
+    "fio": {
+      "lastName": "Тестовый",
+      "firstName": "Тест",
+      "secondName": "Тестович"
+    },
+    "birthdate": "\"1994-03-14T21:00:00.000Z\"",
+    "email": "test@gmail.com"
   }
 ]
