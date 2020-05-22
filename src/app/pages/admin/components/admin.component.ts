@@ -15,7 +15,7 @@ class AdminController {
         private auth: AuthentificationService
     ) {
         'ngInject';
-        if (this.auth.recheck(UserTypeEnum.ADMINISTRATOR)) { this.init(); }
+        this.auth.checkUser(UserTypeEnum.ADMINISTRATOR) ? this.init() : this.auth.enter();
     }
 
     private init = (): void => {

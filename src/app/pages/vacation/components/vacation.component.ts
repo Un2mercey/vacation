@@ -10,7 +10,7 @@ class VacationController {
         private auth: AuthentificationService
     ) {
         'ngInject';
-        if (this.auth.recheck(UserTypeEnum.STANDART)) { this.init(); }
+        this.auth.checkUser(UserTypeEnum.STANDART) ? this.init() : this.auth.enter();
     }
 
     private init = (): void => {

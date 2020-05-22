@@ -68,12 +68,15 @@ export class AuthentificationService {
         return this.searchUser({login: this.ssService.getItem('login')}, 1);
     }
 
-    public recheck = (type: UserTypeEnum): boolean | void => {
-        return this.checkUser() ? this.checkUser(type) ? true : this.enter() : this.exit();
-    }
-
     public enter = () => {
-        this.checkUserType(UserTypeEnum.ADMINISTRATOR) ? this.$state.go('administrator') : this.$state.go('vacation');
+        switch (this.user.getType()) {
+            case UserTypeEnum.ADMINISTRATOR:
+                this.$state.go('administrator');
+                break;
+            case UserTypeEnum.STANDART:
+                this.$state.go('vacation');
+                break;
+        }
     }
 
     public exit = () => {
