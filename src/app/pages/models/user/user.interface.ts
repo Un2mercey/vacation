@@ -10,6 +10,10 @@ export interface IUser {
     birthdate?: Date;
 }
 
+export interface IEditedUser extends IUser{
+    newPassword?: string;
+}
+
 export interface IJsonUser {
     login?: string;
     password?: string;

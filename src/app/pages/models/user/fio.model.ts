@@ -1,42 +1,42 @@
 export interface IFio {
-    lastName?: string;
-    firstName?: string;
-    secondName?: string;
+    lastname?: string;
+    firstname?: string;
+    patronymic?: string;
 }
 
 export class Fio {
 
-    private lastName: string;
-    private firstName: string;
-    private secondName: string;
+    private lastname: string;
+    private firstname: string;
+    private patronymic: string;
 
     constructor(fio: IFio) {
-        this.setLastName(fio.lastName);
-        this.setFirstName(fio.firstName);
-        this.setSecondName(fio.secondName);
+        this.setLastname(fio.lastname);
+        this.setFirstname(fio.firstname);
+        this.setPatronymic(fio.patronymic);
     }
 
-    public setLastName = (lastName: string): void => {
-        this.lastName = lastName;
+    public setLastname = (lastname: string): void => {
+        this.lastname = lastname;
     }
 
-    public getLastName = (): string => {
-        return this.lastName;
+    public getLastname = (): string => {
+        return this.lastname;
     }
 
-    public setFirstName = (firstName: string): void => {
-        this.firstName = firstName;
+    public setFirstname = (firstname: string): void => {
+        this.firstname = firstname;
     }
 
-    public getFirstName = (): string => {
-        return this.firstName;
+    public getFirstname = (): string => {
+        return this.firstname;
     }
 
-    public setSecondName = (secondName: string): void => {
-        this.secondName = secondName;
+    public setPatronymic = (patronymic: string): void => {
+        this.patronymic = patronymic;
     }
 
-    public getSecondName = (): string => {
-        return this.secondName;
+    public getPatronymic = (): string => {
+        return this.patronymic;
     }
 }

@@ -62,9 +62,9 @@ export class AuthentificationService {
                 login: this.user.getLogin(),
                 type: this.user.getType(),
                 fio: {
-                    lastName: this.user.getFio().getLastName(),
-                    firstName: this.user.getFio().getFirstName(),
-                    secondName: this.user.getFio().getSecondName()
+                    lastname: this.user.getFio().getLastname(),
+                    firstname: this.user.getFio().getFirstname(),
+                    patronymic: this.user.getFio().getPatronymic()
                 },
                 email: this.user.getEmail(),
                 birthdate: this.user.getBirthdate()
@@ -98,19 +98,19 @@ export class AuthentificationService {
 
     public getUserShortName = (): string => {
         if (this.checkUndefined(this.user) && this.checkUndefined(this.user.getFio())) {
-            let lastName: string = this.checkUndefined(this.user.getFio().getLastName()) ? this.user.getFio().getLastName() : '';
-            let firstName: string = this.checkUndefined(this.user.getFio().getFirstName()) ? this.user.getFio().getFirstName().substr(0, 1) : '';
-            let secondName: string = this.checkUndefined(this.user.getFio().getSecondName()) ? this.user.getFio().getSecondName().substr(0, 1) : '';
-            return `${lastName} ${firstName}. ${secondName}.`;
+            let lastname: string = this.checkUndefined(this.user.getFio().getLastname()) ? this.user.getFio().getLastname() : '';
+            let firstname: string = this.checkUndefined(this.user.getFio().getFirstname()) ? this.user.getFio().getFirstname().substr(0, 1) : '';
+            let patronymic: string = this.checkUndefined(this.user.getFio().getPatronymic()) ? this.user.getFio().getPatronymic().substr(0, 1) : '';
+            return `${lastname} ${firstname}. ${patronymic}.`;
         }
     }
 
     public getUserFullName = (): string => {
         if (this.checkUndefined(this.user) && this.checkUndefined(this.user.getFio())) {
-            let lastName: string = this.checkUndefined(this.user.getFio().getLastName()) ? this.user.getFio().getLastName() : '';
-            let firstName: string = this.checkUndefined(this.user.getFio().getFirstName()) ? this.user.getFio().getFirstName() : '';
-            let secondName: string = this.checkUndefined(this.user.getFio().getSecondName()) ? this.user.getFio().getSecondName() : '';
-            return `${lastName} ${firstName} ${secondName}`;
+            let lastname: string = this.checkUndefined(this.user.getFio().getLastname()) ? this.user.getFio().getLastname() : '';
+            let firstname: string = this.checkUndefined(this.user.getFio().getFirstname()) ? this.user.getFio().getFirstname() : '';
+            let patronymic: string = this.checkUndefined(this.user.getFio().getPatronymic()) ? this.user.getFio().getPatronymic() : '';
+            return `${lastname} ${firstname} ${patronymic}`;
         }
     }
 

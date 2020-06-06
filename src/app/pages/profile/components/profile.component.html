@@ -5,45 +5,45 @@
             <h1 ng-bind="vm.auth.getUserFullName()"></h1>
         </div>
     </div>
-    <form name="usersForm" novalidate ng-submit="vm.save(vm.newUser)">
+    <form name="usersForm" novalidate ng-submit="vm.save(vm.editedUser)">
         <div class="row form-row">
             <div class="col-md-4 col-sm-6">
-                <label>Фамилия</label>
+                <label>Lastname</label>
             </div>
             <div class="col-md-8 col-sm-6">
                 <input  type="text"
                         class="form-control mr-sm-2"
-                        ng-model="vm.newUser.fio.lastName">
+                        ng-model="vm.editedUser.fio.lastname">
             </div>
         </div>
         <div class="row form-row">
             <div class="col-md-4 col-sm-6">
-                <label>Имя</label>
+                <label>Firstname</label>
             </div>
             <div class="col-md-8 col-sm-6">
                 <input  type="text"
                         class="form-control mr-sm-2"
-                        ng-model="vm.newUser.fio.firstName">
+                        ng-model="vm.editedUser.fio.firstname">
             </div>
         </div>
         <div class="row form-row">
             <div class="col-md-4 col-sm-6">
-                <label>Отчество</label>
+                <label>Patronymic</label>
             </div>
             <div class="col-md-8 col-sm-6">
                 <input  type="text"
                         class="form-control mr-sm-2"
-                        ng-model="vm.newUser.fio.secondName">
+                        ng-model="vm.editedUser.fio.patronymic">
             </div>
         </div>
         <div class="row form-row">
             <div class="col-md-4 col-sm-6">
-                <label>Дата рождения</label>
+                <label>Birthdate</label>
             </div>
             <div class="col-md-8 col-sm-6">
                 <input  type="date"
                         class="form-control mr-sm-2"
-                        ng-model="vm.newUser.birthdate">
+                        ng-model="vm.editedUser.birthdate">
             </div>
         </div>
         <div class="row form-row">
@@ -53,31 +53,43 @@
             <div class="col-md-8 col-sm-6">
                 <input  type="email"
                         class="form-control mr-sm-2"
-                        ng-model="vm.newUser.email">
+                        ng-model="vm.editedUser.email">
             </div>
         </div>
         <div class="row form-row">
             <div class="col-md-4 col-sm-6">
-                <label>Логин</label>
+                <label>Login</label>
             </div>
             <div class="col-md-8 col-sm-6">
                 <input  type="text"
-                    class="form-control mr-sm-2"
-                    ng-model="vm.newUser.login"
-                    maxlength="29"
-                    required>
+                        class="form-control mr-sm-2"
+                        ng-model="vm.editedUser.login"
+                        maxlength="29"
+                        required>
             </div>
         </div>
         <div class="row form-row">
             <div class="col-md-4 col-sm-6">
-                <label>Пароль</label>
+                <label>New password</label>
             </div>
             <div class="col-md-8 col-sm-6">
                 <input  type="password"
-                    class="form-control mr-sm-2"
-                    ng-model="vm.newUser.password"
-                    maxlength="31"
-                    required>
+                        class="form-control mr-sm-2"
+                        ng-model="vm.editedUser.password"
+                        maxlength="31"
+                        required>
+            </div>
+        </div>
+        <div class="row form-row" ng-if="vm.editedUser.password.length">
+            <div class="col-md-4 col-sm-6">
+                <label>Confirm password</label>
+            </div>
+            <div class="col-md-8 col-sm-6">
+                <input  type="password"
+                        class="form-control mr-sm-2"
+                        ng-model="vm.editedUser.confirmPassword"
+                        maxlength="31"
+                        required>
             </div>
         </div>
         <button class="btn btn-save" type="submit" ng-disabled="usersForm.$invalid">Save</button>

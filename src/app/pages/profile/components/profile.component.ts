@@ -1,10 +1,10 @@
 import { AuthentificationService } from './../../services/authentification.service';
-import { IUser } from './../../models/user/user.interface';
+import { IUser, IEditedUser } from './../../models/user/user.interface';
 
 class ProfileController {
 
     private currentUser: IUser;
-    private newUser: IUser;
+    private editedUser: IEditedUser;
 
     constructor(
         private auth: AuthentificationService
@@ -22,7 +22,10 @@ class ProfileController {
     }
 
     private discard = (): void => {
-        this.newUser = this.currentUser;
+        console.log('discard');
+        this.editedUser = this.currentUser;
+        this.editedUser.password = null;
+        this.editedUser.newPassword = null;
     }
 }
 

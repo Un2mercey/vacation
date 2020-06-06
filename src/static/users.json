@@ -4,9 +4,9 @@
     "password": "admin",
     "type": "administrator",
     "fio": {
-      "lastName": "Марков",
-      "firstName": "Арсений",
-      "secondName": "Николаевич"
+      "lastname": "Марков",
+      "firstname": "Арсений",
+      "patronymic": "Николаевич"
     },
     "birthdate": "\"1994-03-14T21:00:00.000Z\"",
     "email": "zamberg42@gmail.com"
@@ -16,9 +16,9 @@
     "password": "user",
     "type": "standart",
     "fio": {
-      "lastName": "Тестовый",
-      "firstName": "Тест",
-      "secondName": "Тестович"
+      "lastname": "Тестовый",
+      "firstname": "Тест",
+      "patronymic": "Тестович"
     },
     "birthdate": "\"1994-03-14T21:00:00.000Z\"",
     "email": "test@gmail.com"

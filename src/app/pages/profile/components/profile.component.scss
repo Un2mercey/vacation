@@ -1,34 +1,26 @@
 .profile-page {
-
     .row.title-row {
-
         padding-top: 20px;
         padding-bottom: 50px;
-
         h1 {
             text-align: center;
             padding: 20px;
         }
     }
-
     form {
         width: 500px;
         position: relative;
         left: 38%;
         text-align: right;
-
         .row.form-row {
             margin-bottom: 1rem;
-
             label {
                 padding-top: 8px;
                 padding-top: 3px;
                 font-size: 20px;
-                margin-right: 10px;
             }
         }
     }
-
     .btn-save {
         background-image: linear-gradient(to right, #E55D87 0%, #5FC3E4 51%, #E55D87 100%);
         transition: 0.5s;
@@ -37,13 +29,11 @@
         color: white !important;
         width: 150px;
     }
-
     .btn-save:hover {
         letter-spacing: 2px;
         background-position: right center;
         color: white !important;
     }
-
     .btn-discard {
         background-image: linear-gradient(to right, #C04848 0%, #480048 51%, #C04848 100%);
         transition: 0.5s;
@@ -53,13 +43,11 @@
         width: 150px;
         margin-left: 15px;
     }
-
     .btn-discard:hover {
         letter-spacing: 2px;
         background-position: right center;
         color: white !important;
     }
-
     .btn-discard:disabled {
         background-image: linear-gradient(to right, #EB3349 0%, #F45C43 51%, #EB3349 100%);
         cursor: $cursor-invalid;
