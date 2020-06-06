@@ -3,7 +3,7 @@ import * as _ from 'underscore';
 import { User } from './../models/user/user.model';
 import { IUser, IJsonUser } from './../models/user/user.interface';
 import { SessionStorageService } from './session-storage.service';
-import { UserTypeEnum } from '../models/user/user-type.enum';
+import { UserTypeEnum } from './../models/user/user-type.enum';
 
 export class AuthentificationService {
 
@@ -12,16 +12,18 @@ export class AuthentificationService {
     private user: User;
 
     constructor(
+        private $location: angular.ILocationService,
         private $state: angular.ui.IStateService,
         private ssService: SessionStorageService,
-        private $q: angular.IQService
+        private $q: angular.IQService,
     ) {
         'ngInject';
+        this.init();
     }
 
     public searchUser = (newUser: IUser, searchProp: number = 2): IUser => {
         let users: Array<IJsonUser> = require('./../../../static/users.json');
-        let matchUser: IJsonUser = this.findUser(users, newUser, searchProp);
+        let matchUser: IJsonUser = this.searchUserInJson(users, newUser, searchProp);
         if (this.checkUndefined(matchUser)) {
             this.user = new User(matchUser);
             sessionStorage.setItem('login', this.user.getLogin());
@@ -29,20 +31,24 @@ export class AuthentificationService {
         }
     }
 
+    public restoreUser = (): IUser => {
+        return this.searchUser({login: this.ssService.getItem('login')}, 1);
+    }
+
     public checkSessionStorage = (): boolean => {
         return Boolean(this.ssService.getItem('login'));
     }
 
     public checkUser = (type?: UserTypeEnum): boolean => {
-        if (type) {
-            if (this.checkUndefined(this.user)) { return this.checkUserType(type);
-            } else if (this.checkSessionStorage() && this.checkUndefined(this.restoreUser())) { return this.checkUserType(type);
-            } else { return false; }
-        } else { return this.checkUndefined(this.user); }
+        return type ? this.checkUserType(type) : this.checkUndefined(this.user);
     }
 
     public checkUserType = (type: UserTypeEnum): boolean => {
         return angular.equals(this.user.getType(), type);
+    }
+
+    public checkUndefined = (value: any): boolean => {
+        return value !== undefined;
     }
 
     public clearUser = (): void => {
@@ -51,17 +57,19 @@ export class AuthentificationService {
     }
 
     public getUser = (): IUser => {
-        return {
-            login: this.user.getLogin(),
-            type: this.user.getType(),
-            fio: {
-                lastName: this.user.getFio().getLastName(),
-                firstName: this.user.getFio().getFirstName(),
-                secondName: this.user.getFio().getSecondName()
-            },
-            email: this.user.getEmail(),
-            birthdate: this.user.getBirthdate()
-        };
+        if (this.checkUndefined(this.user)) {
+            return {
+                login: this.user.getLogin(),
+                type: this.user.getType(),
+                fio: {
+                    lastName: this.user.getFio().getLastName(),
+                    firstName: this.user.getFio().getFirstName(),
+                    secondName: this.user.getFio().getSecondName()
+                },
+                email: this.user.getEmail(),
+                birthdate: this.user.getBirthdate()
+            };
+        }
     }
 
     public getUsersList = (): ng.IPromise<Array<IJsonUser>> => {
@@ -70,22 +78,20 @@ export class AuthentificationService {
         }
     }
 
-    public restoreUser = (): IUser => {
-        return this.searchUser({login: this.ssService.getItem('login')}, 1);
+    public enter = (): void => {
+        if (this.checkUndefined(this.user)) {
+            switch (this.user.getType()) {
+                case UserTypeEnum.ADMINISTRATOR:
+                    this.$state.go('administrator');
+                    break;
+                case UserTypeEnum.STANDART:
+                    this.$state.go('vacation');
+                    break;
+            }
+        } else { this.exit(); }
     }
 
-    public enter = () => {
-        switch (this.user.getType()) {
-            case UserTypeEnum.ADMINISTRATOR:
-                this.$state.go('administrator');
-                break;
-            case UserTypeEnum.STANDART:
-                this.$state.go('vacation');
-                break;
-        }
-    }
-
-    public exit = () => {
+    public exit = (): void => {
         this.clearUser();
         this.$state.go('login');
     }
@@ -108,11 +114,13 @@ export class AuthentificationService {
         }
     }
 
-    private checkUndefined = (value: any): boolean => {
-        return value !== undefined;
+    private init = () => {
+        if (!this.checkUndefined(this.user) && this.checkSessionStorage()) {
+            this.restoreUser();
+        } else if (!angular.equals(this.$location.url(), '/login')) { this.exit(); }
     }
 
-    private findUser = (array: Array<IJsonUser>, user: IUser, propLength: number): IJsonUser => {
+    private searchUserInJson = (array: Array<IJsonUser>, user: IUser, propLength: number): IJsonUser => {
         switch (propLength) {
             case 1:
                 return _.find(array, (jsonUser: IJsonUser) => {

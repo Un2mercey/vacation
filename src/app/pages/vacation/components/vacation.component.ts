@@ -1,6 +1,5 @@
 import * as angular from 'angular';
 import { AuthentificationService } from './../../services/authentification.service';
-import { UserTypeEnum } from './../../models/user/user-type.enum';
 
 class VacationController {
 
@@ -10,11 +9,11 @@ class VacationController {
         private auth: AuthentificationService
     ) {
         'ngInject';
-        this.auth.checkUser(UserTypeEnum.STANDART) ? this.init() : this.auth.enter();
+        this.auth.enter();
     }
 
-    private init = (): void => {
-        console.log('init');
+    $onInit = (): void => {
+        console.log('onInit vacation');
     }
 }
 

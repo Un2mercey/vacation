@@ -2,9 +2,8 @@ import * as angular from 'angular';
 import * as _ from 'underscore';
 import { AuthentificationService } from './../../services/authentification.service';
 import { BaseGrid } from './../../models/base-grid/base-grid.model';
-import { IUser, IJsonUser } from './../../models/user/user.interface';
+import { IJsonUser } from './../../models/user/user.interface';
 import { User } from './../../models/user/user.model';
-import { UserTypeEnum } from '../../models/user/user-type.enum';
 
 class AdminController {
 
@@ -15,10 +14,10 @@ class AdminController {
         private auth: AuthentificationService
     ) {
         'ngInject';
-        this.auth.checkUser(UserTypeEnum.ADMINISTRATOR) ? this.init() : this.auth.enter();
+        this.auth.enter();
     }
 
-    private init = (): void => {
+    $onInit = (): void => {
         this.loadUsersList();
     }
 
