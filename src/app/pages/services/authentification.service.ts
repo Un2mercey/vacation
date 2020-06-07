@@ -15,7 +15,7 @@ export class AuthentificationService {
         private $location: angular.ILocationService,
         private $state: angular.ui.IStateService,
         private ssService: SessionStorageService,
-        private $q: angular.IQService,
+        private $q: angular.IQService
     ) {
         'ngInject';
         this.init();
@@ -44,7 +44,7 @@ export class AuthentificationService {
     }
 
     public checkUserType = (type: UserTypeEnum): boolean => {
-        return angular.equals(this.user.getType(), type);
+        return this.checkUser() && angular.equals(this.user.getType(), type);
     }
 
     public checkUndefined = (value: any): boolean => {
@@ -57,7 +57,7 @@ export class AuthentificationService {
     }
 
     public getUser = (): IUser => {
-        if (this.checkUndefined(this.user)) {
+        if (this.checkUser()) {
             return {
                 login: this.user.getLogin(),
                 type: this.user.getType(),
@@ -79,7 +79,7 @@ export class AuthentificationService {
     }
 
     public enter = (): void => {
-        if (this.checkUndefined(this.user)) {
+        if (this.checkUser()) {
             switch (this.user.getType()) {
                 case UserTypeEnum.ADMINISTRATOR:
                     this.$state.go('administrator');
@@ -97,7 +97,7 @@ export class AuthentificationService {
     }
 
     public getUserShortName = (): string => {
-        if (this.checkUndefined(this.user) && this.checkUndefined(this.user.getFio())) {
+        if (this.checkUser() && this.checkUndefined(this.user.getFio())) {
             let lastname: string = this.checkUndefined(this.user.getFio().getLastname()) ? this.user.getFio().getLastname() : '';
             let firstname: string = this.checkUndefined(this.user.getFio().getFirstname()) ? this.user.getFio().getFirstname().substr(0, 1) : '';
             let patronymic: string = this.checkUndefined(this.user.getFio().getPatronymic()) ? this.user.getFio().getPatronymic().substr(0, 1) : '';
@@ -106,7 +106,7 @@ export class AuthentificationService {
     }
 
     public getUserFullName = (): string => {
-        if (this.checkUndefined(this.user) && this.checkUndefined(this.user.getFio())) {
+        if (this.checkUser() && this.checkUndefined(this.user.getFio())) {
             let lastname: string = this.checkUndefined(this.user.getFio().getLastname()) ? this.user.getFio().getLastname() : '';
             let firstname: string = this.checkUndefined(this.user.getFio().getFirstname()) ? this.user.getFio().getFirstname() : '';
             let patronymic: string = this.checkUndefined(this.user.getFio().getPatronymic()) ? this.user.getFio().getPatronymic() : '';
@@ -115,7 +115,7 @@ export class AuthentificationService {
     }
 
     private init = () => {
-        if (!this.checkUndefined(this.user) && this.checkSessionStorage()) {
+        if (!this.checkUser() && this.checkSessionStorage()) {
             this.restoreUser();
         } else if (!angular.equals(this.$location.url(), '/login')) { this.exit(); }
     }

@@ -9,4 +9,14 @@
 body {
     background: linear-gradient(to right, #667db6, #0082c8, #0082c8, #667db6);
     overflow-x: hidden;
+
+    i.icon.icon-lock {
+        background: $icon-lock;
+        background-size: contain;
+        position: absolute;
+        width: 32px;
+        height: 32px;
+        top: 5px;
+        right: -40px;
+    }
 }

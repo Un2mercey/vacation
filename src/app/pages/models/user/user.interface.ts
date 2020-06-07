@@ -11,7 +11,7 @@ export interface IUser {
 }
 
 export interface IEditedUser extends IUser{
-    newPassword?: string;
+    confirmPassword?: string;
 }
 
 export interface IJsonUser {

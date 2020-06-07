@@ -19,6 +19,17 @@
                 padding-top: 3px;
                 font-size: 20px;
             }
+            i.icon.icon-lock {
+                &.str-pswd {
+                    filter: invert(0%) sepia(10%) saturate(100%) hue-rotate(90deg) brightness(101%) contrast(200%);
+                }
+                &.med-pswd {
+                    filter: invert(0%) sepia(0%) saturate(100%) hue-rotate(185deg) brightness(105%) contrast(100%);
+                }
+                &.low-pswd {
+                    filter: invert(0%) sepia(0%) saturate(100%) hue-rotate(240deg) brightness(100%) contrast(150%);
+                }
+            }
         }
     }
     .btn-save {

@@ -22,13 +22,15 @@ class AdminController {
     }
 
     private loadUsersList = () => {
-        this.auth.getUsersList()
-            .then((response: Array<IJsonUser>) => {
-                _.forEach(response, (respUser: IJsonUser) => { this.grid.records.push(new User(respUser)); });
-            })
-            .catch((error: any) => {
-                console.error(`get users error: ${error}`);
-            });
+        if (this.auth.getUsersList() !== undefined) {
+            this.auth.getUsersList()
+                .then((response: Array<IJsonUser>) => {
+                    _.forEach(response, (respUser: IJsonUser) => { this.grid.records.push(new User(respUser)); });
+                })
+                .catch((error: any) => {
+                    console.error(`get users error: ${error}`);
+                });
+        }
     }
 }
 

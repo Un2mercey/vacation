@@ -5,7 +5,7 @@
             <h1 ng-bind="vm.auth.getUserFullName()"></h1>
         </div>
     </div>
-    <form name="usersForm" novalidate ng-submit="vm.save(vm.editedUser)">
+    <form name="editUserForm" novalidate ng-submit="vm.save(vm.editedUser)">
         <div class="row form-row">
             <div class="col-md-4 col-sm-6">
                 <label>Lastname</label>
@@ -76,8 +76,16 @@
                 <input  type="password"
                         class="form-control mr-sm-2"
                         ng-model="vm.editedUser.password"
-                        maxlength="31"
+                        ng-minlength="6"
+                        ng-maxlength="31"
+                        ng-change="vm.checkPasswordStrength()"
                         required>
+                <i class="icon icon-lock"
+                   ng-if="vm.editedUser.password.length"
+                   ng-class="{ 'str-pswd': vm.passwordStrength == 'strong',
+                               'med-pswd': vm.passwordStrength == 'medium',
+                               'low-pswd': vm.passwordStrength == 'low' }">
+                </i>
             </div>
         </div>
         <div class="row form-row" ng-if="vm.editedUser.password.length">
@@ -88,11 +96,38 @@
                 <input  type="password"
                         class="form-control mr-sm-2"
                         ng-model="vm.editedUser.confirmPassword"
-                        maxlength="31"
+                        ng-minxlength="6"
+                        ng-maxlength="31"
                         required>
             </div>
         </div>
-        <button class="btn btn-save" type="submit" ng-disabled="usersForm.$invalid">Save</button>
-        <button class="btn btn-discard" ng-click="vm.discard()" ng-disabled="!usersForm.$dirty">Discard</button>
+        <div class="row form-row">
+            <button class="btn btn-save" type="submit" ng-disabled="editUserForm.$invalid">Save</button>
+            <button class="btn btn-discard" ng-click="vm.discard()" ng-disabled="!editUserForm.$dirty">Discard</button>
+        </div>
+        <div class="row form-row">
+            <div>
+                <span>invalid: </span>
+                <span>{{editUserForm.$invalid}}</span>
+            </div>
+        </div>
+        <div class="row form-row">
+            <div>
+                <span>valid: </span>
+                <span>{{editUserForm.$valid}}</span>
+            </div>
+        </div>
+        <div class="row form-row">
+            <div>
+                <span>pristine: </span>
+                <span>{{editUserForm.$pristine}}</span>
+            </div>
+        </div>
+        <div class="row form-row">
+            <div>
+                <span>dirty: </span>
+                <span>{{editUserForm.$dirty}}</span>
+            </div>
+        </div>
     </form>
 </div>
