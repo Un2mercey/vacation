@@ -1,0 +1,60 @@
+body {
+    //linear-gradient(to right, #667db6, #0082c8, #0082c8, #667db6)
+    background: $background;
+    background-color: #a7b2c4;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    font-family: 'Lato', sans-serif;
+    font-size: 24px;
+    color: #ffffff;
+    line-height: 1.6;
+    margin: 0;
+    width: 100%;
+    height: 100vh;
+    *,
+    *:before,
+    *:after {
+        box-sizing: border-box;
+    }
+    h1 {
+        font-size: 54px;
+        margin: 0;
+    }
+    h2 {
+        font-size: 48px;
+        margin: 0;
+    }
+    h3 {
+        font-size: 42px;
+        margin: 0;
+    } 
+    h4 {
+        font-size: 36px;
+        margin: 0;
+    } 
+    h5 {
+        font-size: 30px;
+        margin: 0;
+    }
+    h6 {
+        margin: 0;
+    }
+
+    .container {
+        width: 100%;
+        max-width: 1300px;
+        margin: 0 auto;
+    }
+
+    i.icon.icon-lock {
+        background: $icon-lock;
+        background-size: contain;
+        position: absolute;
+        width: 32px;
+        height: 32px;
+        top: 5px;
+        right: -40px;
+    }
+}

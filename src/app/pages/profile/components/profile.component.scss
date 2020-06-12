@@ -12,8 +12,7 @@
             display: block;
             form {
                 width: 500px;
-                position: relative;
-                left: 38%;
+                margin: 0 auto;
                 text-align: right;
                 .row.form-row {
                     margin-bottom: 1rem;
@@ -79,10 +78,8 @@
                 }
             }
             .button-row {
-                width: 500px;
-                left: 38%;
-                position: relative;
-                padding-left: 175px;
+                width: 320px;
+                margin: 0 auto;
                 .btn-save {
                     background-image: linear-gradient(to right, #E55D87 0%, #5FC3E4 51%, #E55D87 100%);
                     transition: 0.5s;

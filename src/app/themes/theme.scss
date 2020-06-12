@@ -1,22 +1,9 @@
 @import '~bootstrap/dist/css/bootstrap';
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap');
 @import './scss/variables';
+@import './scss/body';
 @import './../pages/admin/components/admin.component';
 @import './../pages/directives/app-menu/components/app-menu.component';
 @import './../pages/login/components/login.component';
 @import './../pages/profile/components/profile.component';
 @import './../pages/vacation/components/vacation.component';
-
-body {
-    background: linear-gradient(to right, #667db6, #0082c8, #0082c8, #667db6);
-    overflow-x: hidden;
-
-    i.icon.icon-lock {
-        background: $icon-lock;
-        background-size: contain;
-        position: absolute;
-        width: 32px;
-        height: 32px;
-        top: 5px;
-        right: -40px;
-    }
-}

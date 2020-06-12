@@ -1,6 +1,6 @@
 .app-menu {
     .nav-vice-city {
-        background-image: linear-gradient(to top, #3494E6, #EC6EAD);
+        border-bottom: 1px solid #ffffff;
         a {
             color: #41165c;
             transition: 1s;
@@ -9,9 +9,11 @@
             color: $color-pink-error;
             letter-spacing: 1px;
         }
-
+        .navbar-brand {
+            font-size: 24px;
+        }
         .btn-vice-city-quit {
-            background-image: linear-gradient(to right, #EC6EAD, #3494E6, #EC6EAD);
+            background-image: unset; //linear-gradient(to right, $vice-city-pink, $vice-city-blue, $vice-city-pink)
             width: 150px;
             transition: 1s;
             background-size: 100% auto;
@@ -24,7 +26,7 @@
             width: 155px;
             background-position: right center;
             letter-spacing: 5px;
-            border: 1px solid #EC6EAD;
+            border: 1px solid $vice-city-pink;
             background-size: 200% auto;
             color: $color-pink-error;
         }

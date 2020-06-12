@@ -7,7 +7,7 @@ import { UserTypeEnum } from './../models/user/user-type.enum';
 
 export class AuthentificationService {
 
-    public static selector = 'auth';
+    public static selector: string = 'auth';
 
     private user: User;
 

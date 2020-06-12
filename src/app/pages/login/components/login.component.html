@@ -8,24 +8,16 @@
         <div class="col-md-12">
             <form name="loginForm" novalidate ng-submit="vm.checkAuth(vm.newUser)">
                 <div class="input-group mb-3">
-                    <input  type="text"
-                            class="form-control mr-sm-2"
-                            ng-class="{'form-error': vm.authError}"
-                            placeholder="Your login:"
-                            ng-model="vm.newUser.login"
-                            maxlength="29"
-                            required>
-                    <div class="error-message login" ng-show="vm.authError" ng-bind="vm.messages.MSG_AUTH_ERROR_01"></div>
+                    <input type="text" class="form-control mr-sm-2" ng-class="{'form-error': vm.authError}"
+                        placeholder="Your login:" ng-model="vm.newUser.login" maxlength="29" required>
+                    <div class="error-message login" ng-show="vm.authError" ng-bind="vm.messages.MSG_AUTH_ERROR_01">
+                    </div>
                 </div>
                 <div class="input-group mb-3">
-                    <input  type="password"
-                            class="form-control mr-sm-2"
-                            ng-class="{'form-error': vm.authError}"
-                            placeholder="Your password:"
-                            ng-model="vm.newUser.password"
-                            maxlength="31"
-                            required>
-                    <div class="error-message password" ng-show="vm.authError" ng-bind="vm.messages.MSG_AUTH_ERROR_02"></div>
+                    <input type="password" class="form-control mr-sm-2" ng-class="{'form-error': vm.authError}"
+                        placeholder="Your password:" ng-model="vm.newUser.password" maxlength="31" required>
+                    <div class="error-message password" ng-show="vm.authError" ng-bind="vm.messages.MSG_AUTH_ERROR_02">
+                    </div>
                 </div>
                 <button class="btn btn-login btn-block" type="submit" ng-disabled="loginForm.$invalid">Login</button>
             </form>

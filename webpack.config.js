@@ -44,12 +44,24 @@ module.exports = {
             },
 
             {
-                test: /\.(jpg|png|gif)$/,
+                test: /\.(jpg|jpeg)$/,
                 use: [{
                     loader: 'file-loader',
                     options: {
                         esModule: false,
-                    },
+                        name: 'images/[name].[ext]'
+                    }
+                }],
+            },
+
+            {
+                test: /\.(png|gif)$/,
+                use: [{
+                    loader: 'file-loader',
+                    options: {
+                        esModule: false,
+                        name: 'icons/[name].[ext]'
+                    }
                 }],
             },
 
