@@ -1,0 +1,117 @@
+.user-info {
+    .row {
+        &.title-row {
+            padding-top: 20px;
+            padding-bottom: 50px;
+            h1 {
+                text-align: center;
+                padding: 20px;
+            }
+        }
+        &.user-data-edit {
+            display: block;
+            form {
+                width: 500px;
+                margin: 0 auto;
+                text-align: right;
+                .row.form-row {
+                    margin-bottom: 1rem;
+                    &.last {
+                        margin-top: -28px;
+                    }
+                    label {
+                        padding-top: 8px;
+                        padding-top: 3px;
+                        font-size: 20px;
+                    }
+                    input.mismatch-password {
+                        border: 1px solid $color-pink-error;
+                        background: $color-pink-error;
+                        transition: 2s;
+                    }
+                    input.match-password {
+                        border: 1px solid $color-password-strong;
+                        background: $color-password-strong;
+                        transition: 2s;
+                    }
+                    i.icon.icon-lock {
+                        &.str-pswd {
+                            filter: invert(0%) sepia(10%) saturate(100%) hue-rotate(90deg) brightness(101%) contrast(200%);
+                        }
+                        &.med-pswd {
+                            filter: invert(0%) sepia(0%) saturate(100%) hue-rotate(185deg) brightness(105%) contrast(100%);
+                        }
+                        &.low-pswd {
+                            filter: invert(0%) sepia(0%) saturate(100%) hue-rotate(240deg) brightness(100%) contrast(150%);
+                        }
+                    }
+                }
+                .password-message {
+                    position: relative;
+                    font-size: 20px;
+                    &.mismatch {
+                        bottom: 35px;
+                        left: 210px;
+                        color: $color-pink-error;
+                        letter-spacing: 1px;
+                    }
+                    &.short {
+                        color: $color-password-short;
+                        bottom: 37px;
+                        left: 155px;
+                    }
+                    &.strong {
+                        color: $color-password-strong;
+                        bottom: 34px;
+                        left: 275px;
+                    }
+                    &.medium {
+                        color: $color-password-medium;
+                        bottom: 34px;
+                        left: 259px;
+                    }
+                    &.low {
+                        color: $color-password-low;
+                        bottom: 34px;
+                        left: 186px;
+                    }
+                }
+            }
+            .button-row {
+                width: 320px;
+                margin: 0 auto;
+                .btn-save {
+                    background-image: linear-gradient(to right, #E55D87 0%, #5FC3E4 51%, #E55D87 100%);
+                    transition: 0.5s;
+                    background-size: 200% auto;
+                    border-radius: 12px;
+                    color: white !important;
+                    width: 150px;
+                }
+                .btn-save:hover {
+                    letter-spacing: 2px;
+                    background-position: right center;
+                    color: white !important;
+                }
+                .btn-discard {
+                    background-image: linear-gradient(to right, #C04848 0%, #480048 51%, #C04848 100%);
+                    transition: 0.5s;
+                    background-size: 200% auto;
+                    border-radius: 12px;
+                    color: white !important;
+                    width: 150px;
+                    margin-left: 15px;
+                }
+                .btn-discard:hover {
+                    letter-spacing: 2px;
+                    background-position: right center;
+                    color: white !important;
+                }
+                .btn-discard:disabled {
+                    background-image: linear-gradient(to right, #EB3349 0%, #F45C43 51%, #EB3349 100%);
+                    cursor: $cursor-invalid;
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,147 @@
+<div class="user-info" ng-if="visible">
+    <div class="row title-row">
+        <div class="col-md-12">
+            <h1 ng-bind="vm.user.getFullName()"></h1>
+        </div>
+    </div>
+    <div class="row user-data-edit">
+        <form name="editUserForm" novalidate>
+            <div class="row form-row">
+                <div class="col-md-4 col-sm-6">
+                    <label>Lastname</label>
+                </div>
+                <div class="col-md-8 col-sm-6">
+                    <input  type="text"
+                            class="form-control mr-sm-2"
+                            ng-model="vm.editedUser.fio.lastname">
+                </div>
+            </div>
+            <div class="row form-row">
+                <div class="col-md-4 col-sm-6">
+                    <label>Firstname</label>
+                </div>
+                <div class="col-md-8 col-sm-6">
+                    <input  type="text"
+                            class="form-control mr-sm-2"
+                            ng-model="vm.editedUser.fio.firstname">
+                </div>
+            </div>
+            <div class="row form-row">
+                <div class="col-md-4 col-sm-6">
+                    <label>Patronymic</label>
+                </div>
+                <div class="col-md-8 col-sm-6">
+                    <input  type="text"
+                            class="form-control mr-sm-2"
+                            ng-model="vm.editedUser.fio.patronymic">
+                </div>
+            </div>
+            <div class="row form-row">
+                <div class="col-md-4 col-sm-6">
+                    <label>Birthdate</label>
+                </div>
+                <div class="col-md-8 col-sm-6">
+                    <input  type="date"
+                            class="form-control mr-sm-2"
+                            ng-model="vm.editedUser.birthdate">
+                </div>
+            </div>
+            <div class="row form-row">
+                <div class="col-md-4 col-sm-6">
+                    <label>E-mail</label>
+                </div>
+                <div class="col-md-8 col-sm-6">
+                    <input  type="email"
+                            class="form-control mr-sm-2"
+                            ng-model="vm.editedUser.email">
+                </div>
+            </div>
+            <div class="row form-row">
+                <div class="col-md-4 col-sm-6">
+                    <label>Login</label>
+                </div>
+                <div class="col-md-8 col-sm-6">
+                    <input  type="text"
+                            class="form-control mr-sm-2"
+                            ng-model="vm.editedUser.login"
+                            maxlength="29"
+                            required>
+                </div>
+            </div>
+            <div class="row form-row">
+                <div class="col-md-4 col-sm-6">
+                    <label>New password</label>
+                </div>
+                <div class="col-md-8 col-sm-6">
+                    <input  type="password"
+                            name="editedUserPass"
+                            class="form-control mr-sm-2"
+                            ng-class="{ 'mismatch-password': vm.editedUser.confirmPassword.length > 5 &&
+                                                             vm.editedUser.password.length > 5        && 
+                                                            !vm.checkEqualsPasswords(),
+                                        'match-password': vm.editedUser.confirmPassword.length > 5 &&
+                                                          vm.editedUser.password.length > 5        && 
+                                                          vm.checkEqualsPasswords() }"
+                            ng-model="vm.editedUser.password"
+                            ng-maxlength="31"
+                            ng-change="vm.checkPasswordStrength()"
+                            required>
+                    <i class="icon icon-lock"
+                       ng-if="vm.editedUser.password.length > 5"
+                       ng-class="{ 'str-pswd': vm.passwordStrength == 'strong',
+                                   'med-pswd': vm.passwordStrength == 'medium',
+                                   'low-pswd': vm.passwordStrength == 'low' }">
+                    </i>
+                    <span class="password-message short" 
+                        ng-if="(vm.editedUser.password.length <= 5   || 
+                                vm.editedUser.password === undefined ||
+                                vm.editedUser.password === null      ||
+                                vm.editedUser.password === '')       && 
+                                editUserForm.editedUserPass.$dirty"
+                        ng-bind="vm.messages.MSG_PASSWORD_SHORT">
+                    </span>
+                    <span class="password-message strong" 
+                        ng-if="vm.passwordStrength == 'strong'"
+                        ng-bind="vm.messages.MSG_PASSWORD_STRONG">
+                    </span>
+                    <span class="password-message medium" 
+                        ng-if="vm.passwordStrength == 'medium'"
+                        ng-bind="vm.messages.MSG_PASSWORD_MEDIUM">
+                    </span>
+                    <span class="password-message low" 
+                        ng-if="vm.passwordStrength == 'low'"
+                        ng-bind="vm.messages.MSG_PASSWORD_LOW">
+                    </span>
+                </div>
+            </div>
+            <div class="row form-row last" ng-if="vm.editedUser.password.length">
+                <div class="col-md-4 col-sm-6">
+                    <label>Confirm password</label>
+                </div>
+                <div class="col-md-8 col-sm-6">
+                    <input  type="password"
+                            class="form-control mr-sm-2"
+                            ng-class="{ 'mismatch-password': vm.editedUser.confirmPassword.length > 5 &&
+                                                             vm.editedUser.password.length > 5        && 
+                                                            !vm.checkEqualsPasswords(),
+                                        'match-password': vm.editedUser.confirmPassword.length > 5 &&
+                                                          vm.editedUser.password.length > 5        && 
+                                                          vm.checkEqualsPasswords() }"
+                            ng-model="vm.editedUser.confirmPassword"
+                            ng-maxlength="31"
+                            required>
+                    <span class="password-message mismatch"
+                        ng-show="vm.editedUser.confirmPassword.length > 5 &&
+                                 vm.editedUser.password.length > 5        && 
+                                !vm.checkEqualsPasswords()"
+                        ng-bind="vm.messages.MSG_PASSWORD_MISMATCH">
+                    </span>
+                </div>
+            </div>
+        </form>
+        <div class="button-row">
+            <button class="btn btn-save" type="submit" ng-click="vm.save()" ng-disabled="false">Save</button>
+            <button class="btn btn-discard" ng-click="vm.discard()" ng-disabled="!editUserForm.$dirty">Discard</button>
+        </div>
+    </div>
+</div>

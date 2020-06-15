@@ -1,4 +1,4 @@
-import { IJsonUser } from './user.interface';
+import { IJsonUser, IUser } from './user.interface';
 import { UserTypeEnum, serializeUserType } from './user-type.enum';
 import { Fio, IFio } from './fio.model';
 
@@ -56,5 +56,33 @@ export class User {
 
     public setBirthdate = (birthdate: Date): void => {
         this.birthdate = birthdate;
+    }
+
+    public getIUser = (): IUser => {
+        return {
+            login: this.getLogin(),
+            type: this.getType(),
+            fio: {
+                lastname: this.getFio().getLastname(),
+                firstname: this.getFio().getFirstname(),
+                patronymic: this.getFio().getPatronymic()
+            },
+            email: this.getEmail(),
+            birthdate: this.getBirthdate()
+        };
+    }
+
+    public getShortName = (): string => {
+        let lastname: string = this.getFio().getLastname();
+        let firstname: string = this.getFio().getFirstname().substr(0, 1);
+        let patronymic: string = this.getFio().getPatronymic().substr(0, 1);
+        return `${lastname} ${firstname}. ${patronymic}.`;
+    }
+
+    public getFullName = (): string => {
+        let lastname: string = this.getFio().getLastname();
+        let firstname: string = this.getFio().getFirstname();
+        let patronymic: string = this.getFio().getPatronymic();
+        return `${lastname} ${firstname} ${patronymic}`;
     }
 }

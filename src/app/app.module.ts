@@ -7,6 +7,7 @@ import { moduleName as loginModule } from './pages/login/login.module';
 import { moduleName as adminModule } from './pages/admin/admin.module';
 import { moduleName as vacationModule } from './pages/vacation/vacation.module';
 import { moduleName as profileModule } from './pages/profile/profile.module';
+import { moduleName as usersModule } from './pages/users/users.module';
 /**
  * Import Application Services
  */
@@ -17,6 +18,7 @@ import { AuthentificationService } from './pages/services/authentification.servi
  * Import Application Directives
  */
 import { AppMenuDirective, selector as AppMenuDirectiveSelector } from './pages/directives/app-menu/app-menu.directive';
+import { UserInfoDirective, selector as UserInfoDirectiveSelector } from './pages/directives/user-info/user-info.directive';
 
 export const moduleName =
   angular.module('application', [
@@ -24,7 +26,8 @@ export const moduleName =
     loginModule,
     adminModule,
     vacationModule,
-    profileModule
+    profileModule,
+    usersModule
   ])
   /**
    * Register Application Services
@@ -36,4 +39,5 @@ export const moduleName =
    * Register Application Directives
    */
   .directive(AppMenuDirectiveSelector, AppMenuDirective)
+  .directive(UserInfoDirectiveSelector, UserInfoDirective)
   .name;

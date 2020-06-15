@@ -1,6 +1,6 @@
 import { Vacation } from './components/vacation.component';
 
-export const routing = ($stateProvider: angular.ui.IStateProvider, $urlRouterProvider: angular.ui.IUrlRouterProvider) => {
+export const routing = ($stateProvider: ng.ui.IStateProvider, $urlRouterProvider: ng.ui.IUrlRouterProvider) => {
   'ngInject';
   $stateProvider
     .state('vacation', {

@@ -4,5 +4,5 @@ export const configLocation = ($locationProvider: angular.ILocationProvider) => 
 };
 
 export const configRoot = ($rootScopeProvider: angular.IRootScopeService) => {
-    'ngInject';
+  'ngInject';
 };

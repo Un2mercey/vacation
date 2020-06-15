@@ -1,0 +1,14 @@
+<app-menu></app-menu>
+<div class="users-page">
+    <div class="table">
+        <div class="table-header">
+            Users
+        </div>
+        <div class="table-body">
+            <div class="table-row" ng-repeat="row in vm.grid.records">
+                <a ng-click="vm.changeVisibleRow(row)">{{row.user.getShortName()}}</a>
+                <user-info user="row.user" visible="row.visible"></user-info>
+            </div>
+        </div>
+    </div>
+</div>

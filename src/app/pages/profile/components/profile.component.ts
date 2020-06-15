@@ -1,14 +1,10 @@
 import * as angular from 'angular';
 import { AuthentificationService } from './../../services/authentification.service';
-import { IEditedUser } from './../../models/user/user.interface';
-import { PasswordStrengthEnum, checkStrength } from './../../models/user/password-strength';
-import { Messages } from './../../models/messages/messages';
+import { User } from '../../models/user/user.model';
 
 class ProfileController {
 
-    private editedUser: IEditedUser;
-    private passwordStrength: PasswordStrengthEnum;
-    private messages = Messages;
+    private user: User;
 
     constructor(
         private auth: AuthentificationService,
@@ -17,34 +13,7 @@ class ProfileController {
     }
 
     $onInit = (): void => {
-        this.discard();
-    }
-
-    private checkPasswordStrength = (): void => {
-        if (this.editedUser.password === null       ||
-            this.editedUser.password === undefined  ||
-            this.editedUser.password === '') {
-                this.editedUser.confirmPassword = '';
-        } else if (this.editedUser.password.length > 5) {
-            this.passwordStrength = checkStrength(this.editedUser.password);
-        } else { this.passwordStrength = null; }
-    }
-
-    private checkEqualsPasswords = (): boolean => {
-        return  Boolean(this.editedUser.password.length && this.editedUser.confirmPassword.length) &&
-                angular.equals(this.editedUser.password, this.editedUser.confirmPassword);
-    }
-
-    private save = (): void => {
-        console.log('save\nnewUser:', this.editedUser);
-    }
-
-    private discard = (): void => {
-        console.log('discard');
-        this.editedUser = this.auth.getUser();
-        this.editedUser.password = '';
-        this.editedUser.confirmPassword = '';
-        this.passwordStrength = null;
+        this.user = this.auth.getAuthUser();
     }
 }
 

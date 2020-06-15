@@ -13,7 +13,7 @@ export class AuthentificationService {
 
     constructor(
         private $location: angular.ILocationService,
-        private $state: angular.ui.IStateService,
+        private $state: ng.ui.IStateService,
         private ssService: SessionStorageService,
         private $q: angular.IQService
     ) {
@@ -27,7 +27,7 @@ export class AuthentificationService {
         if (this.checkUndefined(matchUser)) {
             this.user = new User(matchUser);
             sessionStorage.setItem('login', this.user.getLogin());
-            return this.getUser();
+            return this.user.getIUser();
         }
     }
 
@@ -56,19 +56,9 @@ export class AuthentificationService {
         this.ssService.clearStorage();
     }
 
-    public getUser = (): IUser => {
+    public getAuthUser = (): User => {
         if (this.checkUser()) {
-            return {
-                login: this.user.getLogin(),
-                type: this.user.getType(),
-                fio: {
-                    lastname: this.user.getFio().getLastname(),
-                    firstname: this.user.getFio().getFirstname(),
-                    patronymic: this.user.getFio().getPatronymic()
-                },
-                email: this.user.getEmail(),
-                birthdate: this.user.getBirthdate()
-            };
+            return this.user;
         }
     }
 
@@ -96,23 +86,6 @@ export class AuthentificationService {
         this.$state.go('login');
     }
 
-    public getUserShortName = (): string => {
-        if (this.checkUser() && this.checkUndefined(this.user.getFio())) {
-            let lastname: string = this.checkUndefined(this.user.getFio().getLastname()) ? this.user.getFio().getLastname() : '';
-            let firstname: string = this.checkUndefined(this.user.getFio().getFirstname()) ? this.user.getFio().getFirstname().substr(0, 1) : '';
-            let patronymic: string = this.checkUndefined(this.user.getFio().getPatronymic()) ? this.user.getFio().getPatronymic().substr(0, 1) : '';
-            return `${lastname} ${firstname}. ${patronymic}.`;
-        }
-    }
-
-    public getUserFullName = (): string => {
-        if (this.checkUser() && this.checkUndefined(this.user.getFio())) {
-            let lastname: string = this.checkUndefined(this.user.getFio().getLastname()) ? this.user.getFio().getLastname() : '';
-            let firstname: string = this.checkUndefined(this.user.getFio().getFirstname()) ? this.user.getFio().getFirstname() : '';
-            let patronymic: string = this.checkUndefined(this.user.getFio().getPatronymic()) ? this.user.getFio().getPatronymic() : '';
-            return `${lastname} ${firstname} ${patronymic}`;
-        }
-    }
 
     private init = () => {
         if (!this.checkUser() && this.checkSessionStorage()) {

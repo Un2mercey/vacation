@@ -1,0 +1,30 @@
+.users-page {
+    .table {
+        width: 25%;
+        color: #212529;
+        margin: 16px;
+        border-right: 1px solid #333;
+        text-align: center;
+        &-header {
+            text-align: center;
+            border-bottom: 1px solid #333;
+        }
+        &-body {
+
+        }
+        &-row {
+            a {
+                color: brown;
+                cursor: pointer;
+            }
+            user-info {
+                position: absolute;
+                top: 13.6%;
+                width: 73%;
+                left: 26.2%;
+                height: auto;
+                max-height: 86vh;
+            }
+        }
+    }
+}
