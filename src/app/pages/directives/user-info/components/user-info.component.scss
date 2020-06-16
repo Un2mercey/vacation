@@ -16,9 +16,6 @@
                 text-align: right;
                 .row.form-row {
                     margin-bottom: 1rem;
-                    &.last {
-                        margin-top: -28px;
-                    }
                     label {
                         padding-top: 8px;
                         padding-top: 3px;
@@ -47,33 +44,29 @@
                     }
                 }
                 .password-message {
-                    position: relative;
+                    position: absolute;
                     font-size: 20px;
+                    width: 300px;
+                    text-align: left;
+                    bottom: 9px;
+                    left: 114%;
+                    letter-spacing: 1px;
                     &.mismatch {
-                        bottom: 35px;
-                        left: 210px;
+                        left: 104%;
                         color: $color-pink-error;
-                        letter-spacing: 1px;
                     }
                     &.short {
+                        left: 104%;
                         color: $color-password-short;
-                        bottom: 37px;
-                        left: 155px;
                     }
                     &.strong {
                         color: $color-password-strong;
-                        bottom: 34px;
-                        left: 275px;
                     }
                     &.medium {
                         color: $color-password-medium;
-                        bottom: 34px;
-                        left: 259px;
                     }
                     &.low {
                         color: $color-password-low;
-                        bottom: 34px;
-                        left: 186px;
                     }
                 }
             }

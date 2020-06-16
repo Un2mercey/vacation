@@ -63,9 +63,23 @@
                 <div class="col-md-8 col-sm-6">
                     <input  type="text"
                             class="form-control mr-sm-2"
+                            name="editedUserLogin"
                             ng-model="vm.editedUser.login"
+                            ng-change="vm.checkLogin()"
                             maxlength="29"
                             required>
+                    <span class="password-message" 
+                          ng-if="editUserForm.editedUserLogin.$dirty && vm.loginError && vm.editedUser.login.length"
+                          ng-bind="vm.Messages.MSG_INCORRECT_LOGIN">
+                    </span>
+                    <span class="password-message" 
+                          ng-if="editUserForm.editedUserLogin.$dirty && !vm.loginError && vm.editedUser.login.length"
+                          ng-bind="vm.Messages.MSG_CORRECT_LOGIN">
+                    </span>
+                    <span class="password-message" 
+                          ng-if="editUserForm.editedUserLogin.$dirty && !vm.editedUser.login.length"
+                          ng-bind="vm.Messages.MSG_EMPTY_FIELD">
+                    </span>
                 </div>
             </div>
             <div class="row form-row">
@@ -98,23 +112,23 @@
                                 vm.editedUser.password === null      ||
                                 vm.editedUser.password === '')       && 
                                 editUserForm.editedUserPass.$dirty"
-                        ng-bind="vm.messages.MSG_PASSWORD_SHORT">
+                        ng-bind="vm.Messages.MSG_PASSWORD_SHORT">
                     </span>
                     <span class="password-message strong" 
                         ng-if="vm.passwordStrength == 'strong'"
-                        ng-bind="vm.messages.MSG_PASSWORD_STRONG">
+                        ng-bind="vm.Messages.MSG_PASSWORD_STRONG">
                     </span>
                     <span class="password-message medium" 
                         ng-if="vm.passwordStrength == 'medium'"
-                        ng-bind="vm.messages.MSG_PASSWORD_MEDIUM">
+                        ng-bind="vm.Messages.MSG_PASSWORD_MEDIUM">
                     </span>
                     <span class="password-message low" 
                         ng-if="vm.passwordStrength == 'low'"
-                        ng-bind="vm.messages.MSG_PASSWORD_LOW">
+                        ng-bind="vm.Messages.MSG_PASSWORD_LOW">
                     </span>
                 </div>
             </div>
-            <div class="row form-row last" ng-if="vm.editedUser.password.length">
+            <div class="row form-row" ng-if="vm.editedUser.password.length">
                 <div class="col-md-4 col-sm-6">
                     <label>Confirm password</label>
                 </div>
@@ -134,7 +148,7 @@
                         ng-show="vm.editedUser.confirmPassword.length > 5 &&
                                  vm.editedUser.password.length > 5        && 
                                 !vm.checkEqualsPasswords()"
-                        ng-bind="vm.messages.MSG_PASSWORD_MISMATCH">
+                        ng-bind="vm.Messages.MSG_PASSWORD_MISMATCH">
                     </span>
                 </div>
             </div>

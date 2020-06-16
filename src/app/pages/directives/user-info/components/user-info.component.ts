@@ -12,7 +12,8 @@ export class UserInfoDirectiveController {
     private user: User;
     private editedUser: IEditedUser;
     private passwordStrength: PasswordStrengthEnum;
-    private messages = Messages;
+    private Messages = Messages;
+    private loginError: boolean = false;
 
     constructor(
         private auth: AuthentificationService,
@@ -24,6 +25,12 @@ export class UserInfoDirectiveController {
 
     $onInit = (): void => {
         this.discard();
+    }
+
+    private checkLogin = (): void => {
+        if (this.editedUser.login.length > 0) {
+            this.auth.isFreeLogin(this.editedUser.login) ? this.loginError = false : this.loginError = true;
+        }
     }
 
     private checkPasswordStrength = (): void => {

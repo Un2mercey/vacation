@@ -19,11 +19,32 @@
             }
             user-info {
                 position: absolute;
-                top: 13.6%;
+                top: 9.1%;
                 width: 73%;
                 left: 26.2%;
                 height: auto;
                 max-height: 86vh;
+                .title-row {
+                    padding: 0;
+                    h1 {
+                        padding: 0;
+                        padding-left: 60px;
+                        border-bottom: 1px solid;
+                        font-size: 33px;
+                        text-align: left;
+                    }
+                }
+                .user-data-edit {
+                    form {
+                        margin: unset;
+                        margin-top: 20px;
+                        margin-left: 20px;
+                    }
+                    .button-row {
+                        margin: unset;
+                        margin-left: 190px;
+                    }
+                }
             }
         }
     }

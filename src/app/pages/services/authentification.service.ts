@@ -22,8 +22,7 @@ export class AuthentificationService {
     }
 
     public searchUser = (newUser: IUser, searchProp: number = 2): IUser => {
-        let users: Array<IJsonUser> = require('./../../../static/users.json');
-        let matchUser: IJsonUser = this.searchUserInJson(users, newUser, searchProp);
+        let matchUser: IJsonUser = this.searchUserInJson(newUser, searchProp);
         if (this.checkUndefined(matchUser)) {
             this.user = new User(matchUser);
             sessionStorage.setItem('login', this.user.getLogin());
@@ -62,6 +61,10 @@ export class AuthentificationService {
         }
     }
 
+    public isFreeLogin = (login: string): boolean => {
+        return !Boolean(this.searchUserInJson({login: login}, 1));
+    }
+
     public getUsersList = (): ng.IPromise<Array<IJsonUser>> => {
         if (this.checkUserType(UserTypeEnum.ADMINISTRATOR)) {
             return this.$q.resolve(require('./../../../static/users.json'));
@@ -93,14 +96,15 @@ export class AuthentificationService {
         } else if (!angular.equals(this.$location.url(), '/login')) { this.exit(); }
     }
 
-    private searchUserInJson = (array: Array<IJsonUser>, user: IUser, propLength: number): IJsonUser => {
+    private searchUserInJson = (user: IUser, propLength: number): IJsonUser => {
+        let users: Array<IJsonUser> = require('./../../../static/users.json');
         switch (propLength) {
             case 1:
-                return _.find(array, (jsonUser: IJsonUser) => {
+                return _.find(users, (jsonUser: IJsonUser) => {
                     return angular.equals(jsonUser.login, user.login);
                 });
             case 2:
-                return _.find(array, (jsonUser: IJsonUser) => {
+                return _.find(users, (jsonUser: IJsonUser) => {
                     return angular.equals(jsonUser.login, user.login) && angular.equals(jsonUser.password, user.password);
                 });
         }
