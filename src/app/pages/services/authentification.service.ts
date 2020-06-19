@@ -4,6 +4,7 @@ import { User } from './../models/user/user.model';
 import { IUser, IJsonUser } from './../models/user/user.interface';
 import { SessionStorageService } from './session-storage.service';
 import { UserTypeEnum } from './../models/user/user-type.enum';
+import { UsersApiService } from './users-api.service';
 
 export class AuthentificationService {
 
@@ -13,25 +14,30 @@ export class AuthentificationService {
 
     constructor(
         private $location: angular.ILocationService,
-        private $state: ng.ui.IStateService,
         private ssService: SessionStorageService,
-        private $q: angular.IQService
+        private usersApiService: UsersApiService,
+        private $state: ng.ui.IStateService
     ) {
         'ngInject';
         this.init();
     }
 
-    public searchUser = (newUser: IUser, searchProp: number = 2): IUser => {
-        let matchUser: IJsonUser = this.searchUserInJson(newUser, searchProp);
-        if (this.checkUndefined(matchUser)) {
-            this.user = new User(matchUser);
-            sessionStorage.setItem('login', this.user.getLogin());
-            return this.user.getIUser();
-        }
+    public searchUser = (newUser: IUser, searchProp: number = 2): ng.IPromise<IUser | void> => {
+        return this.searchUserInJson(newUser, searchProp)
+            .then((response: IJsonUser) => {
+                if (this.checkUndefined(response)) {
+                    this.user = new User(response);
+                    this.ssService.setItem('login', this.user.getLogin());
+                    return this.user.getIUser();
+                }
+            })
+            .catch((error: any) => { console.error(error); });
     }
 
-    public restoreUser = (): IUser => {
-        return this.searchUser({login: this.ssService.getItem('login')}, 1);
+    public restoreUser = (): ng.IPromise<IUser | void> => {
+        return this.searchUser({login: this.ssService.getItem('login')}, 1)
+                .then((response: IUser) => response)
+                .catch((error: any) => { console.error(error); });
     }
 
     public checkSessionStorage = (): boolean => {
@@ -61,14 +67,12 @@ export class AuthentificationService {
         }
     }
 
-    public isFreeLogin = (login: string): boolean => {
-        return !Boolean(this.searchUserInJson({login: login}, 1));
-    }
-
-    public getUsersList = (): ng.IPromise<Array<IJsonUser>> => {
-        if (this.checkUserType(UserTypeEnum.ADMINISTRATOR)) {
-            return this.$q.resolve(require('./../../../static/users.json'));
-        }
+    public isFreeLogin = (login: string): ng.IPromise<boolean | void> => {
+        return this.searchUserInJson({login: login}, 1)
+            .then((response: IJsonUser) => {
+                return Boolean(response) ? !Boolean(angular.equals(this.user.getIUser(), new User(response).getIUser())) : true;
+            })
+            .catch((error: any) => { console.error(error); });
     }
 
     public enter = (): void => {
@@ -89,24 +93,36 @@ export class AuthentificationService {
         this.$state.go('login');
     }
 
+    public getUsersList = (): ng.IPromise<Array<IJsonUser>> => {
+        if (this.checkUserType(UserTypeEnum.ADMINISTRATOR)) {
+            return this.usersApiService.getUsersJson()
+                .then((response: any) => response.data)
+                .catch((error: any) => { console.error(error); });
+        }
+    }
 
     private init = () => {
         if (!this.checkUser() && this.checkSessionStorage()) {
-            this.restoreUser();
+            this.restoreUser()
+                .then((response: IUser) => { this.enter(); })
+                .catch((error: any) => { console.error(error); });
         } else if (!angular.equals(this.$location.url(), '/login')) { this.exit(); }
     }
 
-    private searchUserInJson = (user: IUser, propLength: number): IJsonUser => {
-        let users: Array<IJsonUser> = require('./../../../static/users.json');
-        switch (propLength) {
-            case 1:
-                return _.find(users, (jsonUser: IJsonUser) => {
-                    return angular.equals(jsonUser.login, user.login);
-                });
-            case 2:
-                return _.find(users, (jsonUser: IJsonUser) => {
-                    return angular.equals(jsonUser.login, user.login) && angular.equals(jsonUser.password, user.password);
-                });
-        }
+    private searchUserInJson = (user: IUser, propLength: number): ng.IPromise<IJsonUser | any> => {
+        return this.usersApiService.getUsersJson()
+            .then((response: any) => {
+                switch (propLength) {
+                    case 1:
+                        return _.find(response.data, (jsonUser: IJsonUser) => {
+                            return angular.equals(jsonUser.login, user.login);
+                        });
+                    case 2:
+                        return _.find(response.data, (jsonUser: IJsonUser) => {
+                            return angular.equals(jsonUser.login, user.login) && angular.equals(jsonUser.password, user.password);
+                        });
+                }
+            })
+            .catch((error: any) => { console.error(error); });
     }
 }

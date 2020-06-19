@@ -3,7 +3,7 @@ import { AuthentificationService } from './../../services/authentification.servi
 
 class VacationController {
 
-    private message: string = 'HELLO AVERAGE USER';
+    private message: string = 'welcome to application home page';
 
     constructor(
         private auth: AuthentificationService

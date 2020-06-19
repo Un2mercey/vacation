@@ -4,7 +4,7 @@ import { AuthentificationService } from './../../services/authentification.servi
 
 class AdminController {
 
-    private title: string = 'HELLO, ADMIN';
+    private title: string = 'Welcome to admin control panel';
 
     constructor(
         private auth: AuthentificationService

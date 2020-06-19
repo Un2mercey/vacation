@@ -14,6 +14,7 @@ import { moduleName as usersModule } from './pages/users/users.module';
 import { LocalStorageService } from './pages/services/local-storage.service';
 import { SessionStorageService } from './pages/services/session-storage.service';
 import { AuthentificationService } from './pages/services/authentification.service';
+import { UsersApiService } from './pages/services/users-api.service';
 /**
  * Import Application Directives
  */
@@ -35,6 +36,7 @@ export const moduleName =
   .service(LocalStorageService.selector, LocalStorageService)
   .service(SessionStorageService.selector, SessionStorageService)
   .service(AuthentificationService.selector, AuthentificationService)
+  .service(UsersApiService.selector, UsersApiService)
   /**
    * Register Application Directives
    */

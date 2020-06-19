@@ -3,7 +3,7 @@ import * as _ from 'underscore';
 import { AuthentificationService } from './../../services/authentification.service';
 import { UserTypeEnum } from './../../models/user/user-type.enum';
 import { BaseGrid } from './../../models/base-grid/base-grid.model';
-import { IJsonUser } from './../../models/user/user.interface';
+import { IJsonUser, IUser } from './../../models/user/user.interface';
 import { User } from './../../models/user/user.model';
 
 class UsersController {
@@ -22,21 +22,17 @@ class UsersController {
         } else { this.auth.enter(); }
     }
 
-    private loadUsersList = () => {
-        if (this.auth.getUsersList() !== undefined) {
-            this.auth.getUsersList()
-                .then((response: Array<IJsonUser>) => {
-                    _.forEach(response, (respUser: IJsonUser) => {
-                        this.grid.records.push({
-                            user: new User(respUser),
-                            visible: false
-                        });
+    private loadUsersList = (): void => {
+        this.auth.getUsersList()
+            .then((response: Array<IJsonUser>) => {
+                _.forEach(response, (respUser: IJsonUser) => {
+                    this.grid.records.push({
+                        user: new User(respUser),
+                        visible: false
                     });
-                })
-                .catch((error: any) => {
-                    console.error(`get users error: ${error}`);
                 });
-        }
+            })
+            .catch((error: any) => { console.error(`get users error: ${error}`); });
     }
 
     private changeVisibleRow = (row: {user: User, visible: boolean}): void => {

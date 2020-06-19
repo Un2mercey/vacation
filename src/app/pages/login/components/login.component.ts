@@ -22,7 +22,11 @@ class LoginController {
 
     private checkAuth = (newUser: IUser): void => {
         this.authError = false;
-        this.auth.searchUser(newUser) !== undefined ? this.auth.enter() : this.authError = true;
+        this.auth.searchUser(newUser)
+            .then((response: IUser) => {
+                this.auth.checkUndefined(response) ? this.auth.enter() : this.authError = true;
+            })
+            .catch((error: any) => { this.authError = true; });
     }
 }
 

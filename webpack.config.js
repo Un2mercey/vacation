@@ -7,6 +7,10 @@ const ExtractTextPlugin = require("extract-text-webpack-plugin");
 module.exports = {
     context: ROOT,
 
+    node: {
+        fs: 'empty'
+    },
+
     resolve: {
         extensions: ['.ts', '.js']
     },
@@ -74,13 +78,6 @@ module.exports = {
                 test: /.html$/,
                 exclude: /index.html$/,
                 use: 'html-loader'
-            },
-
-            { 
-                test: /\.json$/,
-                type: 'javascript/auto',
-                exclude: /node_modules/,
-                loader: 'json-loader'
             }
         ]
     },

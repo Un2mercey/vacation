@@ -28,8 +28,12 @@ export class UserInfoDirectiveController {
     }
 
     private checkLogin = (): void => {
-        if (this.editedUser.login.length > 0) {
-            this.auth.isFreeLogin(this.editedUser.login) ? this.loginError = false : this.loginError = true;
+        if (Boolean(this.editedUser.login)) {
+            this.auth.isFreeLogin(this.editedUser.login)
+                .then((response: boolean) => {
+                    response ? this.loginError = false : this.loginError = true;
+                })
+                .catch((error: any) => { console.error(error); });
         }
     }
 
