@@ -21,7 +21,7 @@
   "dependencies": {
     "@types/underscore": "^1.10.0",
     "@uirouter/angularjs": "1.0.21",
-    "angular": "^1.7.9",
+    "angular": "^1.8.0",
     "bootstrap": "^4.5.0"
   },
   "devDependencies": {
