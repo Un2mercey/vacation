@@ -4,7 +4,7 @@ import { routing  } from './vacation.routes';
 
 export const moduleName =
   angular
-    .module('application.vacation', ['ui.router'])
+    .module('app.vacation', ['ui.router'])
     /**
      * Register Module Components
      */

@@ -4,7 +4,7 @@ import { routing } from './admin.routes';
 
 export const moduleName =
   angular
-    .module('application.admin', ['ui.router'])
+    .module('app.admin', ['ui.router'])
     /**
      * Register Module Components
      */

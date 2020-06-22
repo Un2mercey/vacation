@@ -4,7 +4,7 @@ import { Login } from './components/login.component';
 
 export const moduleName =
   angular
-    .module('application.login', ['ui.router'])
+    .module('app.login', ['ui.router'])
     /**
      * Register Module Components
      */
