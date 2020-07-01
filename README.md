@@ -1,7 +1,6 @@
 # Vacation App
 ## Usage
-1. install NodeJS
-https://nodejs.org/en/
+1. install [NodeJS](https://nodejs.org/en/)
 
 2. install dependencies
 ```
