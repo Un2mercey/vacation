@@ -3,6 +3,7 @@ import * as _ from 'underscore';
 import { Messages } from './../../models/messages/messages';
 import { AuthentificationService } from './../../services/authentification.service';
 import { IUser } from './../../models/user/user.interface';
+import { SomeModalController } from './../../modals/some-modal/someModalController';
 
 class LoginController {
 
@@ -11,13 +12,26 @@ class LoginController {
     private messages = Messages;
 
     constructor(
-        private $rootScope: angular.IRootScopeService,
-        private auth: AuthentificationService
+        private $rootScope: ng.IRootScopeService,
+        private auth: AuthentificationService,
+        private $uibModal: ng.ui.bootstrap.IModalService
     ) {
-        'ngInject';
         if (this.auth.checkUser()) { this.auth.enter(); }
         this.$rootScope.$watch(() => { return this.newUser.login; }, (newValue, oldValue) => { this.authError = false; });
         this.$rootScope.$watch(() => { return this.newUser.password; }, (newValue, oldValue) => { this.authError = false; });
+    }
+
+    private openModal = (): void => {
+        console.log('function');
+        this.$uibModal.open({
+            template: require('./../../modals/some-modal/some-modal.html'),
+            controller: SomeModalController,
+            controllerAs: 'vm'
+        })
+            .result
+            .then((val: any) => console.log(val))
+            .catch((err: any) => console.log(err))
+            .finally(() => console.log('finally'));
     }
 
     private checkAuth = (newUser: IUser): void => {

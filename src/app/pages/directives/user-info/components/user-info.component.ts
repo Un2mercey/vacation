@@ -57,7 +57,6 @@ export class UserInfoDirectiveController {
     }
 
     private discard = (): void => {
-        console.log('discard');
         this.editedUser = this.user.getIUser();
         this.editedUser.password = '';
         this.editedUser.confirmPassword = '';

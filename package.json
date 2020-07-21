@@ -19,10 +19,12 @@
     "start": "webpack-dev-server --config webpack-dev.config.js"
   },
   "dependencies": {
+    "@types/angular-ui-bootstrap": "^1.0.0",
     "@types/underscore": "^1.10.0",
     "@uirouter/angularjs": "1.0.21",
     "angular": "^1.8.0",
-    "bootstrap": "^4.5.0"
+    "bootstrap": "^4.5.0",
+    "ui-bootstrap4": "^3.0.6"
   },
   "devDependencies": {
     "@types/angular": "^1.6.57",
