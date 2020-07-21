@@ -100,13 +100,24 @@ export class AuthentificationService {
                 .catch((error: any) => { console.error(error); });
         }
     }
+    public returnedFn = (): string | number => {
+        return 'str';
+    }
 
     private init = () => {
+        console.log('init');
         if (!this.checkUser() && this.checkSessionStorage()) {
+            console.log('init in if');
             this.restoreUser()
-                .then((response: IUser) => { this.enter(); })
+                .then((response: IUser) => {
+                    console.log('init in then');
+                    this.enter();
+                })
                 .catch((error: any) => { console.error(error); });
-        } else if (!angular.equals(this.$location.url(), '/login')) { this.exit(); }
+        } else if (!angular.equals(this.$location.url(), '/login')) {
+            console.log('init in else if');
+            this.exit();
+        }
     }
 
     private searchUserInJson = (user: IUser, propLength: number): ng.IPromise<IJsonUser | any> => {
