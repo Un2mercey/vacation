@@ -22,7 +22,7 @@ import { AppMenuDirective, selector as AppMenuDirectiveSelector } from './pages/
 import { UserInfoDirective, selector as UserInfoDirectiveSelector } from './pages/directives/user-info/user-info.directive';
 
 export const moduleName =
-  angular.module('application', [
+  angular.module('app', [
     coreModule,
     loginModule,
     adminModule,

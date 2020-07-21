@@ -1,4 +1,4 @@
-import { App } from './components/app/app.component';
+import { Root } from './components/root.component';
 
 export const routing = ($stateProvider: ng.ui.IStateProvider, $urlRouterProvider: ng.ui.IUrlRouterProvider) => {
   'ngInject';
@@ -6,7 +6,7 @@ export const routing = ($stateProvider: ng.ui.IStateProvider, $urlRouterProvider
     .state('app', {
       abstract: true,
       url: '/',
-      component: App.selector
+      component: Root.selector
     });
 
     $urlRouterProvider.otherwise('/login');
